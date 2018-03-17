@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+
+<title>Smart Coach</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+  <nav class="navbar navbar-expand-sm bg-danger navbar-dark">
+              <a class="navbar-brand" href="#"><h2>Smart Coach</h2></a>
+</nav>
+    <div class="container" style="width: 50%;">
+  <form role="form" action="recursos/controles/control_login.php" method="post" id="login" name="login">
+    <div class="form-group">
+      <label for="email">Email:</label>
+      <input type="email" class="form-control" id="mail" placeholder="Ingresa tu email" name="mail">
+    </div>
+    <div class="form-group">
+      <label for="pwd">Password:</label>
+      <input type="password" class="form-control" id="pwd" placeholder="Ingresa tu contraseña" name="pwd">
+    </div>
+    <!-- <div class="form-check">
+      <label class="form-check-label">
+        <input class="form-check-input" type="checkbox" name="remember"> Remember me
+      </label>
+    </div> -->
+    <button type="submit" class="btn btn-outline-danger">Ingresar</button>
+  </form>
+</div>
+</body>
+</html>
