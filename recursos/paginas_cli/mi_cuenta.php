@@ -51,7 +51,7 @@ return true}
               </ul>
             </nav>
 <div class="container" style="padding-top: 5px">
-<form action="../controles/control_modCli_MC.php" method="POST">
+<form action="../controles/control_modCli_MC.php" method="POST" onsubmit="return validar(this)">
   <div class="row">
   <div class="col-12">
     <h3>Mis Datos</h3>
@@ -103,7 +103,7 @@ return true}
         </form>
   </div>
   </div>
-<form action="../controles/control_modPassCli.php" method="POST">
+<form action="../controles/control_modPassCli.php" method="POST" onsubmit="return validar(this)">
 <div class="row">
 <div class="col-12">
    <hr>

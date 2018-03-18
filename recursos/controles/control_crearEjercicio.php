@@ -1,14 +1,13 @@
 <?php
-// session_start();
-// 	//$_SESSION["correo"];
-// 	if( isset($_SESSION['id_coach']) ){
-// 		//Si la sesión esta seteada no hace nada
-// 		$us = $_SESSION['id_coach'];
-// 	}
-// 	else{
-// 		//Si no lo redirige a la pagina index para que inicie la sesion	
-// 		header("location: ../../index.html");
-// 	}      
+ session_start();
+ if( isset($_SESSION['id'])and $_SESSION['tipo'] == 1  ){
+ 		//Si la sesión esta seteada no hace nada
+ 		$us = $_SESSION['id'];
+ 	}
+ 	else{
+		//Si no lo redirige a la pagina index para que inicie la sesion	
+		header("location: ../../index.html");
+	}         
 	     
 	require_once '../clases/Funciones.php';
 	require_once '../clases/ClaseEjercicio.php';

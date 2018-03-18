@@ -100,7 +100,7 @@ function evo() {
                 </ul>
 </nav>
 <div class="container" style="padding-top: 5px">
-<form action="../controles/control_modCli.php" method="POST">
+<form action="../controles/control_modCli.php" method="POST" onsubmit="return validar(this)">
   <div class="row">
   <div class="col-12">
     <h3>Modificar Cliente</h3>

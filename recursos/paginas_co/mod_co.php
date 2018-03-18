@@ -45,6 +45,7 @@ function mod(co) {
         $('#nom_co').val(result[0].nom_coach);
         $('#correo_co').val(result[0].correo_coach);
         $('#fono_co').val(result[0].fono_coach);
+        $('#fb_co').val(result[0].fb_coach);
 
 
         if ((result[0].vig_coach)==1) {  
@@ -134,6 +135,10 @@ function mod(co) {
           <div class="form-group">
              <label for="fono">Telefono (8 digitos):</label>
              <input type="tel"  class="form-control" id="fono_co" name="fono_co" pattern="[0-9]{8}" required>
+          </div>
+          <div class="form-group">
+             <label for="fb">Nombre de Facebook:</label>
+             <input type="text"  class="form-control" id="fb_co" name="fb_co" maxlength="50" required>
           </div>
   </div>
   <div class="col-6">

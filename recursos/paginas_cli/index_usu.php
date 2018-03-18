@@ -24,18 +24,7 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 
 
-<style>
- #div1, #div2 {
-    float: left;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid #E6E6E6;
-    -webkit-border-radius: 4px; /* recuerda la primera frase */
-    -moz-border-radius: 4px; /* si quieres todas las esquinas iguales */
-</style>
+
 </head>
 
 <body>
@@ -71,7 +60,18 @@ if (strtotime('+1 month',strtotime($row['fec_plan_cli'])) >= time()) {
 
  echo $div.'Vigencia Desde '.date('d-m-Y',strtotime($row['fec_plan_cli'])).' Hasta '.date('d-m-Y', strtotime('+1 month',strtotime($row['fec_plan_cli']))); ?></div>
 
+<?php
 
+              $hoy = date('Y-m-d', time());
+              $re1 = $fun->coach_rutina($id,$hoy);
+               foreach($re1 as $row1){
+                echo '<a href="https://m.me/'.$row1['fb_coach'].'" class="btn btn-primary" target="_blank">Mensaje de Facebook a '.$row1['nom_coach'].'</a>';
+               }
+              
+            
+?>
+<br>
+<br>
          
  <table class="table table-sm table-dark" id="tabla" name="tabla">
   <thead>
@@ -91,8 +91,8 @@ if (strtotime('+1 month',strtotime($row['fec_plan_cli'])) >= time()) {
   <tbody>
   <?php
 
-              $hoy = '2018-01-30';//date('Y-m-d', time());
-              $re = $fun->cargar_entrenamiento(1,$hoy);
+              $hoy = date('Y-m-d', time());
+              $re = $fun->cargar_entrenamiento($id,$hoy);
               foreach($re as $row){
 
             

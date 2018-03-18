@@ -1,11 +1,79 @@
 <?php
 
 require_once '../db/db.php';
-require_once '../db/PHPMailer/class.phpmailer.php';
-require_once '../db/PHPMailer/class.smtp.php';
+
 
 class Funciones 
 {
+
+
+    /*///////////////////////////////////////
+    Registrar Evaluación
+    //////////////////////////////////////*/
+    public function reg_evaluacion($enf, $can, $prob, $med, $imp, $sem, $lab, $inf, $casa, $obj, $cli) {
+
+
+        try{
+             
+                $pdo = AccesoDB::getCon();
+
+                $sql= "INSERT INTO `evaluacion`(`enf_car_evo`,`can_des_evo`,`prob_ost_evo`,`med_evo`,`imp_evo`,`act_sem_evo`,`act_lab_evo`,`act_inf_evo`,`tiempo_casa_evo`,`obj_evo`,`fk_id_cli`)
+                VALUES(:enf, :can, :prob, :med, :imp, :sem, :lab, :inf, :casa, :obj, :cli)";
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":enf", $enf, PDO::PARAM_BOOL);
+                $stmt->bindParam(":can", $can, PDO::PARAM_BOOL);
+                $stmt->bindParam(":prob", $prob, PDO::PARAM_BOOL);
+                $stmt->bindParam(":med", $med, PDO::PARAM_BOOL);
+                $stmt->bindParam(":imp", $imp, PDO::PARAM_BOOL);
+                $stmt->bindParam(":sem", $sem, PDO::PARAM_INT);
+                $stmt->bindParam(":lab", $lab, PDO::PARAM_INT);
+                $stmt->bindParam(":inf", $inf, PDO::PARAM_INT);
+                $stmt->bindParam(":casa", $casa, PDO::PARAM_BOOL);
+                $stmt->bindParam(":obj", $obj, PDO::PARAM_INT);
+                $stmt->bindParam(":cli", $cli, PDO::PARAM_INT);
+
+                $stmt->execute();
+        
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../../index.html';</script>"; 
+            }
+    }
+
+
+
+    /*///////////////////////////////////////
+    Cargar coach rutina
+    //////////////////////////////////////*/
+        public function coach_rutina($cli,$fec) {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select b.nom_coach, b.fb_coach
+                                from rutina a inner join coach b on a.fk_id_coach = b.id_coach
+                                where  a.fk_id_cli =:cli and a.fec_rut = :fec and a.vig_rut = 1";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":cli", $cli, PDO::PARAM_INT);
+                $stmt->bindParam(":fec", $fec, PDO::PARAM_STR);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
 
 
     /*///////////////////////////////////////
@@ -20,7 +88,7 @@ class Funciones
 
 
         
-                        $sql = "select nom_coach, correo_coach, fono_coach,vig_coach,super from coach where id_coach = :co";
+                        $sql = "select nom_coach, correo_coach, fono_coach,vig_coach,super,fb_coach from coach where id_coach = :co";
                                                 
 
                 $stmt = $pdo->prepare($sql);

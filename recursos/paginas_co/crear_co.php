@@ -80,6 +80,10 @@ return true}
              <label for="fono">Telefono (8 digitos):</label>
              <input type="tel"  class="form-control" id="fono_co" name="fono_co" pattern="[0-9]{8}" required>
           </div>
+          <div class="form-group">
+             <label for="fb">Nombre de Facebook:</label>
+             <input type="text"  class="form-control" id="fb_co" name="fb_co" maxlength="50" required>
+          </div>
   </div>
   <div class="col-6">
           <div class="form-check">
@@ -87,10 +91,6 @@ return true}
             <input class="form-check-input" type="checkbox" name="super" id="super"> Super Usuario
             </label>
           </div>
-          <div class="form-check">
-            <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="vig" id="vig"> Vigencia
-            </label>
           </div>
           <input type="submit" name="btnAc" id="btnAc" class="btn btn-outline-danger" value="Crear Coach">
         </form>

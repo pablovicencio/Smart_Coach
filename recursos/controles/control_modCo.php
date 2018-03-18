@@ -1,6 +1,5 @@
 <?php
  session_start();
- 	//$_SESSION["correo"];
 	if(  isset($_SESSION['id']) and $_SESSION['tipo'] == 1  ){
 		//Si la sesión esta seteada no hace nada
  		$us = $_SESSION['id'];
@@ -31,9 +30,10 @@
 		}else{
 			$vig = 0;
 		}
+		$fb = $_POST['fb_co'];
 
 
-			$dao = new CoachDAO($coach, $nom, $correo, $fono, '', $vig, $super, '');
+			$dao = new CoachDAO($coach, $nom, $correo, $fono, '', $vig, $super, $fb);
 			$mod_co = $dao->modificar_coach();
 
 			
