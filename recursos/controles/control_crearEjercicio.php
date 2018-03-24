@@ -17,10 +17,15 @@
 		$musc = $_POST['musc'];
 		$link = $_POST['link_ejer'];
 		$nota = $_POST['nota_ejer'];
+		if (isset($_POST['gym'])) {
+			$gym = 1;
+		}else{
+			$gym = 0;
+		}
 		$vigencia = 1;
 
 
-			$dao = new EjercicioDAO('',$nom, $link, $nota, $vigencia);
+			$dao = new EjercicioDAO('',$nom, $link, $nota, $vigencia, $gym);
 		
 			$crear_ejer = $dao->crear_ejercicio($musc);
 			

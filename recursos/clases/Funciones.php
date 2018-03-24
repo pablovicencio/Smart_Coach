@@ -7,6 +7,54 @@ class Funciones
 {
 
 
+
+
+
+   /*///////////////////////////////////////
+    Ver Evaluación
+    //////////////////////////////////////*/
+    public function cargar_eva($cli) {
+
+
+        try{
+             
+                $pdo = AccesoDB::getCon();
+
+                $sql= "select if(enf_car_evo = 1,'Si','No') enf, if(can_des_evo= 1,'Si','No') can, if(prob_ost_evo =
+                        1,'Si','No') prob,
+                        if(med_evo = 1,'Si','No') med, if(imp_evo = 1,'Si','No') imp, act_sem_evo act, act_lab_evo act_lab, 
+                        case
+                        when act_inf_evo = 0 then 'No'
+                        when act_inf_evo = 1 then 'ocacional'
+                        when act_inf_evo = 2 then 'Regular'
+                        when act_inf_evo = 3 then 'siempre'
+                        end act_inf,
+                        if(tiempo_casa_evo= 1,'Sentado','De Pie') tiempo,
+                        case
+                        when obj_evo = 1 then 'Aumentar Masa'
+                        when obj_evo = 2 then 'Disminuir % Grasa'
+                        when obj_evo = 3 then 'Disminuir tu % de grasa y aumentar levemente la masa muscular simultáneamente'
+                        when obj_evo = 4 then 'Sólo mejorar su condición física de manera general'
+                        end obj  
+                         from evaluacion where fk_id_cli = :cli";
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":cli", $cli, PDO::PARAM_INT);
+
+                $stmt->execute();
+                $response = $stmt->fetchAll();
+                return $response;
+        
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../../index.html';</script>"; 
+            }
+    }
+
+
+
+
+
     /*///////////////////////////////////////
     Registrar Evaluación
     //////////////////////////////////////*/
@@ -307,7 +355,7 @@ class Funciones
 
         
                         $sql = "select a.nom_cli, a.correo_cli, a.fono_cli, a.fec_nac_cli,  (select est_evo  from evo_cli where fk_id_cli = a.id_cli order by fec_evo asc limit 1) est,
-                                (select peso_evo  from evo_cli where fk_id_cli = a.id_cli order by fec_evo asc limit 1) peso ,a.fec_plan_cli, a.vig_cli
+                                (select peso_evo  from evo_cli where fk_id_cli = a.id_cli order by fec_evo asc limit 1) peso ,a.fec_plan_cli, a.vig_cli, a.tipo_cli
                                 from clientes a where a.id_cli = :cli";
                                                 
 
@@ -363,20 +411,23 @@ class Funciones
     /*///////////////////////////////////////
     Cargar Ejercicio x musculo
     //////////////////////////////////////*/
-        public function cargar_ejercicios($musc) {
+        public function cargar_ejercicios($musc, $cli) {
 
             try{
                 
                 
                 $pdo = AccesoDB::getCon();
 
-
         
-                        $sql = "SELECT *  FROM ejercicios WHERE fk_id_musc = :musc";
+                        $sql = "SELECT a.id_ejer, a.nom_ejer, a.link_ejer, a.nota_ejer, a.fk_id_musc, 
+                        a.vig_ejer, a.tipo_ejer
+                        FROM ejercicios a, clientes b WHERE a.tipo_ejer = b.tipo_cli 
+                        and b.id_cli = :cli and  fk_id_musc = :musc";
                 
 
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(":musc", $musc, PDO::PARAM_INT);
+                $stmt->bindParam(":cli", $cli, PDO::PARAM_INT);
                 $stmt->execute();
 
                 $response = $stmt->fetchAll();

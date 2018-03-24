@@ -22,7 +22,7 @@ if (isset($_GET{'dato'})) {
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head><meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <title>Smart Coach</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">

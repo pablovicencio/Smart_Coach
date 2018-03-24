@@ -19,6 +19,12 @@
 		$link = $_POST['link_ejer'];
 		$nota = $_POST['nota_ejer'];
 
+		if (isset($_POST['gym'])) {
+			$gym = 1;
+		}else{
+			$gym = 0;
+		}
+
 		if (isset($_POST['vig'])) {
 			$vig = 1;
 		}else{
@@ -26,7 +32,7 @@
 		}
 
 
-			$dao = new EjercicioDAO($ejer,$nom, $link, $nota, $vig);
+			$dao = new EjercicioDAO($ejer,$nom, $link, $nota, $vig, $gym);
 
 		
 			$mod_ejer = $dao->modificar_ejer($musc);

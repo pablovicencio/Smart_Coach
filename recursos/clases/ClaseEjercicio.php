@@ -13,12 +13,13 @@ class EjercicioDAO
     private $nota;
     private $vigencia;
     
-    public function __construct($id=null,$nombre=null, $link=null, $nota=null, $vigencia=null) {
+    public function __construct($id=null,$nombre=null, $link=null, $nota=null, $vigencia=null, $gimnasio=null) {
         $this->id  = $id;
         $this->nombre  = $nombre;
         $this->link  = $link;
         $this->nota  = $nota;
         $this->vigencia  = $vigencia;
+        $this->gimnasio  = $gimnasio;
 }
 
 public function getEjercicio() {
@@ -35,8 +36,8 @@ public function getEjercicio() {
              
                 $pdo = AccesoDB::getCon();
 
-                $sql_crear_suc = "INSERT INTO `ejercicios`(`nom_ejer`,`link_ejer`,`nota_ejer`,`fk_id_musc`,`vig_ejer`)
-                            VALUES(:nom,:link,:nota,:musc, :vig)";
+                $sql_crear_suc = "INSERT INTO `ejercicios`(`nom_ejer`,`link_ejer`,`nota_ejer`,`fk_id_musc`,`vig_ejer`,`tipo_ejer`)
+                            VALUES(:nom,:link,:nota,:musc, :vig, :gym)";
                 
 
                 $stmt = $pdo->prepare($sql_crear_suc);
@@ -45,6 +46,7 @@ public function getEjercicio() {
                 $stmt->bindParam(":nota", $this->nota, PDO::PARAM_STR);
                 $stmt->bindParam(":musc", $musc, PDO::PARAM_INT);
                 $stmt->bindParam(":vig", $this->vigencia, PDO::PARAM_BOOL);
+                $stmt->bindParam(":gym", $this->gimnasio, PDO::PARAM_INT);
                 $stmt->execute();
 
             } catch (Exception $e) {
@@ -69,7 +71,8 @@ public function getEjercicio() {
                                     `link_ejer` = :link,
                                     `nota_ejer` = :nota,
                                     `fk_id_musc` = :musc,
-                                    `vig_ejer` = :vig
+                                    `vig_ejer` = :vig,
+                                    `tipo_ejer` = :gym
                                     WHERE `id_ejer` = :id";
 
 
@@ -79,6 +82,7 @@ public function getEjercicio() {
                 $stmt->bindParam(":nota", $this->nota, PDO::PARAM_STR);
                 $stmt->bindParam(":musc", $musc, PDO::PARAM_INT);
                 $stmt->bindParam(":vig", $this->vigencia, PDO::PARAM_BOOL);
+                $stmt->bindParam(":gym", $this->gimnasio, PDO::PARAM_BOOL);
                 $stmt->bindParam(":id", $this->id, PDO::PARAM_STR);
 
                 $stmt->execute();

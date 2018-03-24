@@ -21,6 +21,12 @@
 		$fec_plan_cli = $_POST['fec_plan_cli'];
 		$tipo = 1;
 
+		if (isset($_POST['gym'])) {
+			$gym = 1;
+		}else{
+			$gym = 0;
+		}
+
 		if (isset($_POST['vig'])) {
 			$vig = 1;
 		}else{
@@ -28,7 +34,7 @@
 		}
 
 
-			$dao = new ClienteDAO($cli, $correo,'',$nom, $fono, $fec_nac_cli,$fec_plan_cli, $vig);
+			$dao = new ClienteDAO($cli, $correo,'',$nom, $fono, $fec_nac_cli,$fec_plan_cli, $vig, $gym);
 			$mod_cli = $dao->modificar_cli($tipo);
 
 			if (isset($_POST['cambio'])) {

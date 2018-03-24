@@ -24,13 +24,13 @@ Clase abstracta Persona
                 
                 $pdo = AccesoDB::getCon();
 
-                $sql_login = "select id_coach id, correo_coach correo, pass_coach pass, nom_coach nom, super, 1 tipo
+                $sql_login = "select id_coach id, correo_coach correo, pass_coach pass, nom_coach nom, super, 1 tipo,0 eva
                                 from coach 
                                 where vig_coach = 1 and correo_coach = :correo
                                 union all 
-                                select id_cli, correo_cli,pass_cli,nom_cli,0 ,2 tipo
-                                from clientes 
-                                where vig_cli = 1 and correo_cli = :correo and sysdate() BETWEEN fec_plan_cli and DATE_ADD(fec_plan_cli, INTERVAL 1 MONTH);";
+                                select a.id_cli, a.correo_cli,a.pass_cli,a.nom_cli,0 ,2 tipo, IFNULL(b.id_evo,0) 
+                                from clientes a left join evaluacion b on a.id_cli = b.fk_id_cli
+                                where a.vig_cli = 1 and a.correo_cli = :correo and sysdate() BETWEEN a.fec_plan_cli and DATE_ADD(a.fec_plan_cli, INTERVAL 1 MONTH);";
 
                 $stmt = $pdo->prepare($sql_login);
                 $stmt->bindParam(":correo", $correo, PDO::PARAM_STR);
@@ -52,7 +52,13 @@ Clase abstracta Persona
                         if ($row['tipo'] == 1 ) {
                             echo"<script type=\"text/javascript\">      window.location='../paginas_co/entrenamiento.php';</script>"; 
                         }else if ($row['tipo'] == 2 ) {
-                            echo"<script type=\"text/javascript\">      window.location='../paginas_cli/index_usu.php';</script>"; 
+
+                            if ($row['eva'] == 0 ) {
+                                 echo"<script type=\"text/javascript\">      window.location='../paginas_cli/evaluacion.php';</script>"; 
+                            }else{
+
+                                echo"<script type=\"text/javascript\">      window.location='../paginas_cli/index_usu.php';</script>";
+                            } 
                         }
                         
                         }else { 
@@ -233,7 +239,7 @@ class ClienteDAO extends PersonaDAO
     private $fec_nac;
     private $fec_plan;
 
-    public function __construct($id=null, $correo=null, $contraseña=null, $nombre=null, $fono=null, $fec_nac=null,$fec_plan=null, $vigencia=null) {
+    public function __construct($id=null, $correo=null, $contraseña=null, $nombre=null, $fono=null, $fec_nac=null,$fec_plan=null, $vigencia=null,$gimnasio=null) {
         $this->id  = $id;
         $this->correo  = $correo;
         $this->contraseña  = $contraseña;
@@ -242,6 +248,7 @@ class ClienteDAO extends PersonaDAO
         $this->fec_nac=$fec_nac;
         $this->fec_plan=$fec_plan;
         $this->vigencia  = $vigencia;
+        $this->gimnasio  = $gimnasio;
     }
 
     public function getCliente() {
@@ -258,8 +265,8 @@ class ClienteDAO extends PersonaDAO
              
                 $pdo = AccesoDB::getCon();
 
-                $sql_crear_cli = "INSERT INTO `clientes`(`correo_cli`,`pass_cli`,`nom_cli`,`fono_cli`,`fec_nac_cli`,`fec_plan_cli`,`vig_cli`)
-                            VALUES(:correo,:pass,:nom,:fono,:fec_nac,:fec_plan,:vig)";
+                $sql_crear_cli = "INSERT INTO `clientes`(`correo_cli`,`pass_cli`,`nom_cli`,`fono_cli`,`fec_nac_cli`,`fec_plan_cli`,`vig_cli`,`tipo_cli`)
+                            VALUES(:correo,:pass,:nom,:fono,:fec_nac,:fec_plan,:vig,:gym)";
 
 
                 $stmt = $pdo->prepare($sql_crear_cli);
@@ -270,6 +277,7 @@ class ClienteDAO extends PersonaDAO
                 $stmt->bindParam(":fec_nac", $this->fec_nac, PDO::PARAM_STR);
                 $stmt->bindParam(":fec_plan", $this->fec_plan, PDO::PARAM_STR);
                 $stmt->bindParam(":vig", $this->vigencia, PDO::PARAM_BOOL);
+                $stmt->bindParam(":gym", $this->gimnasio, PDO::PARAM_INT);
                 $stmt->execute();
 
             } catch (Exception $e) {
@@ -326,7 +334,7 @@ class ClienteDAO extends PersonaDAO
 
                 if ($tipo == 1) {
                     $sql_mod_cli = "update clientes
-                            set  correo_cli = :correo, nom_cli = :nom, fono_cli = :fono ,fec_nac_cli = :fec_nac,fec_plan_cli = :fec_plan,  vig_cli = :vig where id_cli =:id ";
+                            set  correo_cli = :correo, nom_cli = :nom, fono_cli = :fono ,fec_nac_cli = :fec_nac,fec_plan_cli = :fec_plan,  vig_cli = :vig, tipo_cli = :gym where id_cli =:id ";
 
                             $stmt = $pdo->prepare($sql_mod_cli);
                 $stmt->bindParam(":correo", $this->correo, PDO::PARAM_STR);
@@ -335,6 +343,7 @@ class ClienteDAO extends PersonaDAO
                 $stmt->bindParam(":fec_nac", $this->fec_nac, PDO::PARAM_STR);
                 $stmt->bindParam(":fec_plan", $this->fec_plan, PDO::PARAM_STR);
                 $stmt->bindParam(":vig", $this->vigencia, PDO::PARAM_BOOL);
+                $stmt->bindParam(":gym", $this->gimnasio, PDO::PARAM_INT);
                 $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
                 $stmt->execute();
                 }elseif ($tipo == 2) {

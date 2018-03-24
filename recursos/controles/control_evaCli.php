@@ -24,7 +24,6 @@
 		$obj = $_POST['opt_obj'];
 		$id_cli = $us;
 
-		echo ($enf. $can. $prob. $med. $imp. $sem. $lab. $inf. $casa. $obj. $id_cli);
 
 
 			$fun = new Funciones(); 

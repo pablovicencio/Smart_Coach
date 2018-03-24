@@ -16,7 +16,7 @@ if( isset($_SESSION['id']) and $_SESSION['tipo'] == 1 ){
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head><meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <title>Smart Coach</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
@@ -48,9 +48,13 @@ function mod(cli) {
         $('#peso_cli').val(result[0].peso);
         $('#fec_plan_cli').val(result[0].fec_plan_cli);
 
+        if ((result[0].tipo_cli)==1) {  
+          $('#gym').prop('checked', true);
+              } else{$('#gym').prop('checked', false);}
+
         if ((result[0].vig_cli)==1) {  
           $('#vig').prop('checked', true);
-              } 
+              } else{$('#vig').prop('checked', false);}
 
   }
   })
@@ -90,10 +94,10 @@ function evo() {
                 <li class="nav-item"><a class="nav-link" href="#">Dieta</a></li>
                 <!-- Dropdown -->
                     <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Usuarios</a>
+                      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Coach</a>
                       <div class="dropdown-menu">
-                        <a class="dropdown-item" href="crear_co.php">Crear Usuario</a>
-                        <a class="dropdown-item" href="#">Modificar Usuario</a>
+                        <a class="dropdown-item" href="crear_co.php">Crear Coach</a>
+                        <a class="dropdown-item" href="mod_co.php">Modificar Coach</a>
                       </div>
                     </li>
                 <li class="nav-item"><a class="nav-link" href="../controles/logout.php" onclick="return confirm('¿Deseas finalizar sesión?');">Cerrar Sesión</a></li>
@@ -163,6 +167,11 @@ function evo() {
                <label for="fec_plan">Fecha Inicio del Plan(fecha de termino +1 mes):</label>
               <input type="date" class="form-control" id="fec_plan_cli" name="fec_plan_cli" required>
             </div>
+          <div class="form-check">
+            <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="gym" id="gym"> Gimnasio
+            </label>
+          </div>
           <div class="form-check">
             <label class="form-check-label">
             <input class="form-check-input" type="checkbox" name="vig" id="vig"> Vigencia

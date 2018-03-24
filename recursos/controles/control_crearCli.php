@@ -24,6 +24,11 @@
 		$fec_evo = date("Y-m-d", time());
 		$est_cli = $_POST['est_cli'];
 		$peso_cli = $_POST['peso_cli'];
+		if (isset($_POST['gym'])) {
+			$gym = 1;
+		}else{
+			$gym = 0;
+		}
 		$vig = 1;
 		
 		$fun = new Funciones(); 
@@ -40,7 +45,7 @@
 		}else{
 			$nueva_pass = $fun->generaPass();
 
-			$dao = new ClienteDAO('', $correo,md5($nueva_pass),$nom, $fono, $fec_nac_cli,$fec_plan_cli, $vig);
+			$dao = new ClienteDAO('', $correo,md5($nueva_pass),$nom, $fono, $fec_nac_cli,$fec_plan_cli, $vig, $gym);
 		
 			$crear_cli = $dao->crear_cliente();
 			$reg_evo = $dao->reg_evo($correo,$fec_evo,$est_cli,$peso_cli);

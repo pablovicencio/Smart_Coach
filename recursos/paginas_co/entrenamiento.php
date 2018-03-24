@@ -16,7 +16,7 @@ if( isset($_SESSION['id']) and $_SESSION['tipo'] == 1 ){
 ?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head><meta http-equiv="Content-Type" content="text/html; charset=euc-jp">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
 <title>Smart Coach</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
@@ -78,10 +78,10 @@ return true}
                 <li class="nav-item"><a class="nav-link" href="#">Dieta</a></li>
                 <!-- Dropdown -->
                     <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Usuarios</a>
+                      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Coach</a>
                       <div class="dropdown-menu">
-                        <a class="dropdown-item" href="crear_co.php">Crear Usuario</a>
-                        <a class="dropdown-item" href="#">Modificar Usuario</a>
+                        <a class="dropdown-item" href="crear_co.php">Crear Coach</a>
+                        <a class="dropdown-item" href="#">Modificar Coach</a>
                       </div>
                     </li>
                 <li class="nav-item"><a class="nav-link" href="../controles/logout.php" onclick="return confirm('¿Deseas finalizar sesión?');">Cerrar Sesión</a></li>
@@ -141,9 +141,7 @@ return true}
                                         {
                                           ?>
                                           
-                                           <option value="<?php echo $row1['id_musc'] ?> ">
-                                           <?php echo $row1['nom_musc'] ?>
-                                           </option>
+                                           <option value="<?php echo ($row1['id_musc']); ?>"><?php echo ($row1['nom_musc']); ?></option>
                                               
                                           <?php
                                         }    
@@ -160,6 +158,11 @@ return true}
               <label for="nota">Nota de ejecucion:</label>
               <textarea class="form-control" rows="5" id="nota_ejer" name="nota_ejer"></textarea>
             </div>
+             <div class="form-check">
+            <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="gym" id="gym"> Gimnasio
+            </label>
+          </div>
             <input type="submit" class="btn btn-outline-danger" id="btnAc" name="btnAc" value="Crear Ejercicio">
           </form>
     </div>

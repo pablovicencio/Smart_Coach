@@ -5,12 +5,13 @@ require_once '../clases/Funciones.php';
 
 try{
 $musc = intval($_GET['q']);
+$cli = intval($_GET['cli']);
 
 $fun = new Funciones(); 
 
 
 									echo'<option value="" selected disabled >Seleccione Ejercicio</option>';  
-									$re = $fun->cargar_ejercicios($musc); 
+									$re = $fun->cargar_ejercicios($musc, $cli); 
 
                                     foreach($re as $row)      
                                         {
