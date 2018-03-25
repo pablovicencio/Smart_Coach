@@ -6,6 +6,68 @@ require_once '../db/db.php';
 class Funciones 
 {
 
+        /*///////////////////////////////////////
+            restablecer contraseña
+        //////////////////////////////////////*/
+        public function res_pass($mail,$new_pass, $val){
+
+            try{
+                //echo generaPass();
+                //$pass = generaPass();
+                
+                $pdo = AccesoDB::getCon();
+
+                if ($val == 1) {
+                    $sql = "UPDATE clientes
+                            SET pass_cli = MD5(:pass) WHERE correo_cli = :cli";
+                }elseif ($val == 2) {
+                    $sql = "UPDATE coach
+                            SET pass_coach = MD5(:pass) WHERE correo_coach = :cli";
+                }
+
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":pass", $new_pass, PDO::PARAM_STR);
+                $stmt->bindParam(":cli", $mail, PDO::PARAM_STR);
+                $stmt->execute();
+        
+
+            } catch (Exception $e) {
+               echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../../index.html';</script>"; 
+            }
+        }
+
+
+
+
+    /*///////////////////////////////////////
+    Validar Correo para resetear contraseña
+    //////////////////////////////////////*/
+    public function validacion($mail) {
+
+
+        try{
+             
+                $pdo = AccesoDB::getCon();
+
+                $sql= " select 2 id from clientes where correo_cli = :correo
+                        union all
+                        select 1 id from coach where correo_coach = :correo ";
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":correo", $mail, PDO::PARAM_INT);
+
+                $stmt->execute();
+                $response = $stmt->fetchColumn();
+                return $response;
+        
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../../index.html';</script>"; 
+            }
+    }
+
 
 
 
@@ -656,57 +718,63 @@ class Funciones
         /*///////////////////////////////////////
             Actualizar contraseña usuario
         //////////////////////////////////////*/
-        public function correo_upd_pass($mail_usu,$nueva_pass) {
+        public function enviar_reset_pass($mail,$nueva_pass) {
             
 
             try{
-                $mail = new PHPMailer(true);
-                                                                // Configuramos el protocolo SMTP con autenticación
-
-                $mail->IsSMTP();
-
-                $mail->SMTPAuth = true;
-                                                                // Configuración del servidor SMTP
-                $mail->SMTPSecure = 'ssl';
-
-                $mail->Port = 465;
-                $mail->Host = 'smtp.gmail.com';
-                $mail->Username   = 'pablo.vicencioc@gmail.com';
-                $mail->Password = 'jklas123';
 
 
 
+        $to = $mail;
+        $subject = "Reestablecer contraseña";
+        $headers = "MIME-Version: 1.0" . "\r\n";
+        $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
-                                                                $mail->FromName = "Smart Coach";
 
-                                                                $mail->AddAddress($mail_usu); 
-                    $mail->Subject = "Smart Coach - CAMBIO DE CONTRASEÑA"; 
-                    $mail->MsgHTML(' 
+                    
+                    $message = ' 
                     <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
                     
                     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-                       <title>Cambio de Contraseña</title> 
+                       <title>Reestablecer Contraseña</title> 
                     </head> 
                     <body style="font: Verdana, Geneva, sans-serif">
  
                     Estimad@ usuario se ha actualizado la contraseña de su cuenta Smart Coach.<p>
-                    Usuario:    '.$mail_usu.'<br /> 
                     Contraseña: '.$nueva_pass.'<p>
 
 <p>         
                     
 </body>
                     </html> 
-                    '); 
-                    $mail->CharSet = 'UTF-8';
-                                        $exito = $mail->Send(); // Envía el correo.
+                    ';
+                    $exito = mail($to, $subject, $message, $headers);
+
+
+// if($exito){
+//                                                     echo"<script type=\"text/javascript\">alert('Mensaje enviado correctamente');       window.location='index.html';</script>"; 
+//                                         }else{
+//                                             echo"<script type=\"text/javascript\">alert('Error, verifique los datos ingresados'); window.location='../../index.html';</script>";  
+//                                         }
+
         } catch (Exception $e) {
-                throw $e;
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../../reset_password.html';</script>";
         }
         }
 
+
+
+
+
+
+
+
+
+
+
+//funciones paulashes
 
 
 
