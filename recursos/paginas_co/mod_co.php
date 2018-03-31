@@ -70,8 +70,8 @@ function mod(co) {
 
   
   
-      <nav class="navbar navbar-expand-sm bg-danger navbar-dark">
-              <a class="navbar-brand" href="#"><h2>Smart Coach</h2></a>
+      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+              <a  href="entrenamiento.php"><img class="img-fluid" src="../img/logo/logo_d3safio3.png" alt="D3safio" width="292" height="60"></a>
               <ul class="navbar-nav ml-auto" >
                 <!-- Dropdown -->
                     <li class="nav-item dropdown">
@@ -152,7 +152,7 @@ function mod(co) {
             <input class="form-check-input" type="checkbox" name="vig" id="vig"> Vigencia
             </label>
           </div>
-          <input type="submit" name="btnAc" id="btnAc" class="btn btn-outline-danger" value="Modificar Coach">
+          <input type="submit" name="btnAc" id="btnAc" class="btn btn-outline-success" value="Modificar Coach">
         </form>
   </div>
   </div>

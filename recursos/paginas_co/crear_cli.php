@@ -31,8 +31,8 @@ return true}
 
   
   
-      <nav class="navbar navbar-expand-sm bg-danger navbar-dark">
-              <a class="navbar-brand" href="#"><h2>Smart Coach</h2></a>
+      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+              <a  href="entrenamiento.php"><img class="img-fluid" src="../img/logo/logo_d3safio3.png" alt="D3safio" width="292" height="60"></a>
               <ul class="navbar-nav ml-auto" >
                 <!-- Dropdown -->
                     <li class="nav-item dropdown">
@@ -49,7 +49,7 @@ return true}
                       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Coach</a>
                       <div class="dropdown-menu">
                         <a class="dropdown-item" href="crear_co.php">Crear Coach</a>
-                        <a class="dropdown-item" href="#">Modificar Coach</a>
+                        <a class="dropdown-item" href="mod_co.php">Modificar Coach</a>
                       </div>
                     </li>
                 <li class="nav-item"><a class="nav-link" href="../controles/logout.php" onclick="return confirm('¿Deseas finalizar sesión?');">Cerrar Sesión</a></li>
@@ -100,7 +100,7 @@ return true}
             <input class="form-check-input" type="checkbox" name="gym" id="gym"> Gimnasio
             </label>
           </div>
-            <input type="submit" class="btn btn-outline-danger" id="btnAc" value="Crear Cliente">
+            <input type="submit" class="btn btn-outline-success" id="btnAc" value="Crear Cliente">
           </form>
     </div>
     </div>

@@ -209,24 +209,11 @@ function storeTblValues()
 
 
 </script>
-
-<style>
- #div1, #div2 {
-    float: left;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin: 5px;
-    padding: 5px;
-    border: 1px solid #E6E6E6;
-    -webkit-border-radius: 4px; /* recuerda la primera frase */
-    -moz-border-radius: 4px; /* si quieres todas las esquinas iguales */
-</style>
 </head>
 
 <body>
-      <nav class="navbar navbar-expand-sm bg-danger navbar-dark">
-              <a class="navbar-brand" href="#"><h2>Smart Coach</h2></a>
+      <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+              <a  href="entrenamiento.php"><img class="img-fluid" src="../img/logo/logo_d3safio3.png" alt="D3safio" width="292" height="60"></a>
               <ul class="navbar-nav ml-auto" >
                 <!-- Dropdown -->
                     <li class="nav-item dropdown">
@@ -243,7 +230,7 @@ function storeTblValues()
                       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Coach</a>
                       <div class="dropdown-menu">
                         <a class="dropdown-item" href="crear_co.php">Crear Coach</a>
-                        <a class="dropdown-item" href="#">Modificar Coach</a>
+                        <a class="dropdown-item" href="mod_co.php">Modificar Coach</a>
                       </div>
                     </li>
                 <li class="nav-item"><a class="nav-link" href="../controles/logout.php" onclick="return confirm('¿Deseas finalizar sesión?');">Cerrar Sesión</a></li>
@@ -468,7 +455,7 @@ if (strtotime('+1 month',strtotime($row['fec_plan_cli'])) >= time()) {
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-dark" onclick="agregar()">Agregar</button>
-        <button type="button" class="btn btn btn-outline-danger" onclick="storeTblValues()" >Guardar</button>
+        <button type="button" class="btn btn-outline-success" onclick="storeTblValues()" >Guardar</button>
       </div>
       </form>
       <table class="table table-sm table-dark" id="tabla" name="tabla">

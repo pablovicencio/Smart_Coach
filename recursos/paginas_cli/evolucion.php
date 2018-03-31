@@ -49,8 +49,8 @@ if (isset($_GET{'dato'})) {
 </head>
 
 <body>
-           <nav class="navbar navbar-expand-sm bg-danger navbar-dark">
-              <a class="navbar-brand" href="#"><h2>Smart Coach</h2></a>
+           <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+              <a  href="index_usu.php"><img class="img-fluid" src="../img/logo/logo_d3safio3.png" alt="D3safio" width="292" height="60"></a>
               <ul class="navbar-nav ml-auto" >
               <li class="nav-item"><a class="nav-link" href="index_usu.php">Hoy</a></li>
                 <li class="nav-item"><a class="nav-link" href="calendario.php">Calendario</a></li>

@@ -28,8 +28,8 @@
 </head>
 
 <body>
-            <nav class="navbar navbar-expand-sm bg-danger navbar-dark">
-              <a class="navbar-brand" href="#"><h2>Smart Coach</h2></a>
+            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+              <img class="img-fluid" src="recursos/img/logo/logo_d3safio3.png" alt="D3safio" width="292" height="60">
               </ul>
             </nav>
 <div class="container" style="padding-top: 5px">

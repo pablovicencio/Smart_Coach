@@ -35,8 +35,8 @@ return true}
 </head>
 
 <body>
-            <nav class="navbar navbar-expand-sm bg-danger navbar-dark">
-              <a class="navbar-brand" href="#"><h2>Smart Coach</h2></a>
+            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+              <img class="img-fluid" src="../img/logo/logo_d3safio3.png" alt="D3safio" width="292" height="60">
               <ul class="navbar-nav ml-auto" >
                 <li class="nav-item"><a class="nav-link" href="../controles/logout.php" onclick="return confirm('¿Deseas finalizar sesión?');">Cerrar Sesión</a></li>
               </ul>
@@ -170,7 +170,7 @@ return true}
 
 </div>
 <center>
-<input type="submit" name="btnAc" id="btnAc" class="btn btn-outline-danger" value="Enviar Evaluación">
+<input type="submit" name="btnAc" id="btnAc" class="btn btn-outline-success" value="Enviar Evaluación">
 </center>
 </form>
 

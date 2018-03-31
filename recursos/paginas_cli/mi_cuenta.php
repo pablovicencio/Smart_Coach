@@ -40,8 +40,8 @@ return true}
 
   
   
-       <nav class="navbar navbar-expand-sm bg-danger navbar-dark">
-              <a class="navbar-brand" href="#"><h2>Smart Coach</h2></a>
+       <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+              <a  href="index_usu.php"><img class="img-fluid" src="../img/logo/logo_d3safio3.png" alt="D3safio" width="292" height="60"></a>
               <ul class="navbar-nav ml-auto" >
               <li class="nav-item"><a class="nav-link" href="index_usu.php">Hoy</a></li>
                 <li class="nav-item"><a class="nav-link" href="calendario.php">Calendario</a></li>
@@ -99,7 +99,7 @@ return true}
             <label for="peso">Peso (KG):</label>
             <input type="number" class="form-control" id="peso_cli" name="peso_cli" step="any" required readonly>
           </div>
-          <input type="submit" name="btnAc" id="btnAc" class="btn btn-outline-danger" value="Modificar Cuenta">
+          <input type="submit" name="btnAc" id="btnAc" class="btn btn-outline-success" value="Modificar Cuenta">
         </form>
   </div>
   </div>
@@ -125,7 +125,7 @@ return true}
             <label for="nom">Confirmar Nueva Contraseña (6 caracteres)</label>
             <input type="password" class="form-control" id="nueva_pass1" name="nueva_pass1" maxlength="6" required>
           </div>
-          <input type="submit" name="btnAc" id="btnAc" class="btn btn-outline-danger" value="Modificar Contraseña">
+          <input type="submit" name="btnAc" id="btnAc" class="btn btn-outline-success" value="Modificar Contraseña">
         </form>
     </div>
     
