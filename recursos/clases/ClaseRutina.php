@@ -104,6 +104,39 @@ class RutinaDAO
         }
 
 
+        /*///////////////////////////////////////
+        Evaluar Rutina-BORG
+        //////////////////////////////////////*/
+        public function borg_rutina($esc, $fec, $cli) {
+
+            try{
+
+                
+                $pdo = AccesoDB::getCon();
+
+
+               
+
+                $sql_borg_rut = "INSERT INTO `smart_coach`.`esc_borg`(`esc`,`fec_esc`,`fk_esc_rut`,`fk_esc_cli`)
+                                VALUES(:esc, :fec, :rut, :cli)";
+
+
+
+                $stmt = $pdo->prepare($sql_borg_rut);
+                        $stmt->bindParam("esc", $esc, PDO::PARAM_INT);
+                        $stmt->bindParam("fec", $fec, PDO::PARAM_STR);
+                        $stmt->bindParam("rut", $this->id, PDO::PARAM_INT);
+                        $stmt->bindParam("cli", $cli, PDO::PARAM_INT);
+                $stmt->execute();
+
+        
+
+            } catch (Exception $e) {
+                 echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_cli/index_usu.php';</script>"; 
+            }
+        }
+
+
 
 
 }

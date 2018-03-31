@@ -48,18 +48,7 @@ return true}
 
 </script>
 
-<style>
- #div1, #div2 {
-    float: left;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin: 10px;
-    padding: 10px;
-    border: 1px solid #E6E6E6;
-    -webkit-border-radius: 4px; /* recuerda la primera frase */
-    -moz-border-radius: 4px; /* si quieres todas las esquinas iguales */
-</style>
+
 </head>
 
 <body>

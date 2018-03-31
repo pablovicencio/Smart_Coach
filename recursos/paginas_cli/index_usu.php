@@ -23,7 +23,19 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 
+<style>
+ #borg {
+    width: 30%;
+</style>
 
+<script>
+
+function validar(f){
+f.btnAc.value="Enviando Evaluación";
+f.btnAc.disabled=true;
+return true}
+
+</script>
 
 </head>
 
@@ -116,10 +128,25 @@ if (strtotime('+1 month',strtotime($row['fec_plan_cli'])) >= time()) {
 </table>
 
 
+<form role="form" action="../controles/control_enviarBorg.php" method="post">
+    <div name="borg" >
+      <input type="hidden" name="id_rut" value=<?php echo ($row['id_rut']);?>>
+      <label for="sel1">¿Como sentiste tu entrenamiento el día de hoy?</label>
+      <select class="form-control" id="borg" name="borg">
+        <option value="1">Muy, muy ligero </option>
+        <option value="2">Muy ligero</option>
+        <option value="3">Ligero</option>
+        <option value="4">Moderado</option>
+        <option value="5">Un poco pesado</option>
+        <option value="6">Pesado</option>
+        <option value="7">Muy pesado</option>
+        <option value="8">Extremadamente pesado</option>
+      </select>
+      <br>
+      <input type="submit" class="btn btn-outline-danger" id="btnAc" name="btnAc" value="Enviar" title="Recuerda que puedes enviar solo una evaluacion de entrenamiento por rutina">
+    </div>
 
-
-
-
+</form>
 
 
 </div>

@@ -323,34 +323,62 @@ if (strtotime('+1 month',strtotime($row['fec_plan_cli'])) >= time()) {
     </tbody>
     </table> 
 </center>
+      <div class="row">
+          <div class="col-6">
+                      <h5>Historial de avances</h5>
+                               
+                        <table class="table table-sm table-dark" name="tabla_evo" id="tabla_evo">
+                          <thead >
+                            <tr>
+                              <th>Fecha</th>
+                              <th>Estatura</th>
+                              <th>Peso</th>
+                              <th>IMC</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          <?php
+                                    $re1 = $fun->cargar_evo_cli($cli);
+                                    foreach($re1 as $row1){
 
-<h5>Historial de avances</h5>
-         
-  <table class="table table-sm table-dark" name="tabla_evo" id="tabla_evo">
-    <thead >
-      <tr>
-        <th>Fecha</th>
-        <th>Estatura</th>
-        <th>Peso</th>
-        <th>IMC</th>
-      </tr>
-    </thead>
-    <tbody>
-    <?php
-              $re1 = $fun->cargar_evo_cli($cli);
-              foreach($re1 as $row1){
+                                  
+                                      echo ('<tr><td>'.date('d-m-Y',strtotime($row1['fec_evo'])).'</td>');
+                                      echo ('<td>'.$row1['est_evo'].'</td>');
+                                      echo ('<td>'.$row1['peso_evo'].'</td>');
+                                      echo ('<td>'.$row1['imc'].'</td></tr>');
+                       
+                                    }
+                      ?>
+                          </tbody>
+                        </table>
+            </div>
+            <div class="col-6">
+                      <h5>Historial Borg</h5>
+                               
+                        <table class="table table-sm table-dark" name="tabla_evo" id="tabla_evo">
+                          <thead >
+                            <tr>
+                              <th>Fecha Rutina</th>
+                              <th>Clasificación</th>
+                              <th>Fecha Borg</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                          <?php
+                                    $re2 = $fun->cargar_borg($cli);
+                                    foreach($re2 as $row2){
 
-            
-                echo ('<tr><td>'.date('d-m-Y',strtotime($row1['fec_evo'])).'</td>');
-                echo ('<td>'.$row1['est_evo'].'</td>');
-                echo ('<td>'.$row1['peso_evo'].'</td>');
-                echo ('<td>'.$row1['imc'].'</td></tr>');
- 
-              }
-?>
-    </tbody>
-  </table>
-
+                                  
+                                      echo ('<tr><td>'.date('d-m-Y',strtotime($row2['fec_rut'])).'</td>');
+                                      echo ('<td>'.$row2['esc'].'</td>');
+                                      echo ('<td>'.date('d-m-Y',strtotime($row2['fec_esc'])).'</td></tr>');
+                       
+                                    }
+                      ?>
+                          </tbody>
+                        </table>
+            </div>
+        </div>
 </div>
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document" style="max-width: 70%">

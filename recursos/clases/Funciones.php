@@ -6,6 +6,51 @@ require_once '../db/db.php';
 class Funciones 
 {
 
+
+    /*///////////////////////////////////////
+    Ver Borg
+    //////////////////////////////////////*/
+    public function cargar_borg($cli) {
+
+
+        try{
+             
+                $pdo = AccesoDB::getCon();
+
+                $sql= "select b.fec_rut, CASE a.esc
+                            WHEN 1 THEN 'Muy, muy ligero'
+                            WHEN 2 THEN 'Muy ligero'
+                            WHEN 3 THEN 'Ligero'
+                            WHEN 4 THEN 'Moderado'
+                            WHEN 5 THEN 'Un poco pesado'
+                            WHEN 6 THEN 'Pesado'
+                            WHEN 7 THEN 'Muy pesado'
+                            WHEN 8 THEN 'Extremadamente pesado'    
+                        END esc, a.fec_esc 
+                        from esc_borg a inner join rutina b on a.fk_esc_rut = b.id_rut 
+                        where fk_id_cli =  :cli order by 1";
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":cli", $cli, PDO::PARAM_INT);
+
+                $stmt->execute();
+                $response = $stmt->fetchAll();
+                return $response;
+        
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_co/entrenamiento.php';</script>"; 
+            }
+    }
+
+
+
+
+
+
+
+
+
         /*///////////////////////////////////////
             restablecer contraseña
         //////////////////////////////////////*/
@@ -295,7 +340,7 @@ class Funciones
 
 
         
-                        $sql = "select b.nom_ejer, c.nom_musc,a.series_rut, a.rep_rut, a.pausas_rut, a.vel_rut,b.nota_ejer, a.nota_rut, SUBSTR(b.link_ejer, 33) video
+                        $sql = "select a.id_rut, b.nom_ejer, c.nom_musc,a.series_rut, a.rep_rut, a.pausas_rut, a.vel_rut,b.nota_ejer, a.nota_rut, SUBSTR(b.link_ejer, 33) video
                                 from rutina a inner join ejercicios b on a.fk_id_ejer = b.id_ejer 
                                 inner join musculos c on b.fk_id_musc = c.id_musc
                                 where  a.fk_id_cli = :cli and a.fec_rut = :fec and a.vig_rut = 1";
