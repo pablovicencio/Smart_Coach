@@ -9,7 +9,7 @@
 
 		$val = $fun->validacion($mail);
 
-		echo $val;
+		//echo $val;
 
 		if (isset($_POST['mail']) and isset($val) ){ 
 			

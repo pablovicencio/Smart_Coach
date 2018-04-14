@@ -26,19 +26,7 @@ if( isset($_SESSION['id']) and $_SESSION['tipo'] == 1 ){
 
 
 <script>
-function allowDrop(ev) {
-    ev.preventDefault();
-}
 
-function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-}
-
-function drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
-}
 
 
 function validar(f){
@@ -64,7 +52,7 @@ return true}
                       </div>
                     </li>
                 <li class="nav-item"><a class="nav-link" href="entrenamiento.php">Entrenamiento</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Dieta</a></li>
+                <li class="nav-item"><a class="nav-link" href="nutricion.php">Nutrición</a></li>
                 <!-- Dropdown -->
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Coach</a>
@@ -87,7 +75,7 @@ return true}
   <select class="form-control" name="cli" style="width: 60%; display: inline-block;">
     <option value="" selected disabled>Seleccione el cliente</option>
                  <?php 
-                  $re = $fun->cargar_clientes_dd();   
+                  $re = $fun->cargar_clientes_dd(1);   
                   foreach($re as $row)      
                       {
                         ?>

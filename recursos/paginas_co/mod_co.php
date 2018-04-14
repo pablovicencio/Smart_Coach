@@ -92,7 +92,7 @@ function mod(co) {
                       </div>
                     </li>
                 <li class="nav-item"><a class="nav-link" href="entrenamiento.php">Entrenamiento</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Dieta</a></li>
+                <li class="nav-item"><a class="nav-link" href="nutricion.php">Nutrición</a></li>
                 <!-- Dropdown -->
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Coach</a>
@@ -159,7 +159,7 @@ function mod(co) {
           </div>
            <div>
             <label class="radio-inline">
-              <input type="radio"  name="tipo" id="tipo_e" value="1">Entrenador
+              <input type="radio"  name="tipo" id="tipo_e" value="1" required>Entrenador
             </label>
             <label class="radio-inline">
               <input type="radio"  name="tipo" id="tipo_n" value="2">Nutricionista

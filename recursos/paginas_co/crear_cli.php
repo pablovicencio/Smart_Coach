@@ -43,7 +43,7 @@ return true}
                       </div>
                     </li>
                 <li class="nav-item"><a class="nav-link" href="entrenamiento.php">Entrenamiento</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Dieta</a></li>
+                <li class="nav-item"><a class="nav-link" href="nutricion.php">Nutrición</a></li>
                 <!-- Dropdown -->
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Coach</a>
@@ -95,11 +95,24 @@ return true}
                <label for="fec_plan">Fecha Inicio del Plan(fecha de termino +1 mes):</label>
               <input type="date" class="form-control" name="fec_plan_cli" required>
             </div>
+            <div>
+              <label for="ser_cli">Plan: </label>
+              <label class="radio-inline">
+              <input type="radio"  name="ser" value="1" required>Entrenamiento
+              </label>
+              <label class="radio-inline">
+              <input type="radio"  name="ser" value="2">Nutrición
+              </label>
+              <label class="radio-inline">
+              <input type="radio"  name="ser" value="3">Full
+              </label>
+            </div>
             <div class="form-check">
-            <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" name="gym" id="gym"> Gimnasio
-            </label>
-          </div>
+              <label class="form-check-label">
+              <input class="form-check-input" type="checkbox" name="gym" id="gym"> Gimnasio
+              </label>
+            </div>
+            
             <input type="submit" class="btn btn-outline-success" id="btnAc" value="Crear Cliente">
           </form>
     </div>

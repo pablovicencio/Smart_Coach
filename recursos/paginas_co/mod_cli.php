@@ -56,6 +56,14 @@ function mod(cli) {
           $('#vig').prop('checked', true);
               } else{$('#vig').prop('checked', false);}
 
+        if ((result[0].servicio_cli)==1) {  
+          $('#ser1').prop('checked', true);
+              } else if ((result[0].servicio_cli)==2) {
+                $('#ser2').prop('checked', true);
+              }else if ((result[0].servicio_cli)==3) {
+                $('#ser3').prop('checked', true);
+              }
+
   }
   })
     
@@ -91,7 +99,7 @@ function evo() {
                       </div>
                     </li>
                 <li class="nav-item"><a class="nav-link" href="entrenamiento.php">Entrenamiento</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Dieta</a></li>
+                <li class="nav-item"><a class="nav-link" href="nutricion.php">Nutrición</a></li>
                 <!-- Dropdown -->
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Coach</a>
@@ -166,6 +174,18 @@ function evo() {
           <div class="form-group">
                <label for="fec_plan">Fecha Inicio del Plan(fecha de termino +1 mes):</label>
               <input type="date" class="form-control" id="fec_plan_cli" name="fec_plan_cli" required>
+            </div>
+          <div>
+              <label for="ser_cli">Plan: </label>
+              <label class="radio-inline">
+              <input type="radio"  name="ser" id="ser1" value="1" required>Entrenamiento
+              </label>
+              <label class="radio-inline">
+              <input type="radio"  name="ser" id="ser2" value="2">Nutrición
+              </label>
+              <label class="radio-inline">
+              <input type="radio"  name="ser" id="ser3" value="3">Full
+              </label>
             </div>
           <div class="form-check">
             <label class="form-check-label">

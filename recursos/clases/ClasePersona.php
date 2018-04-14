@@ -247,7 +247,7 @@ class ClienteDAO extends PersonaDAO
     private $fec_nac;
     private $fec_plan;
 
-    public function __construct($id=null, $correo=null, $contraseña=null, $nombre=null, $fono=null, $fec_nac=null,$fec_plan=null, $vigencia=null,$gimnasio=null) {
+    public function __construct($id=null, $correo=null, $contraseña=null, $nombre=null, $fono=null, $fec_nac=null,$fec_plan=null, $vigencia=null,$gimnasio=null,$servicio=null) {
         $this->id  = $id;
         $this->correo  = $correo;
         $this->contraseña  = $contraseña;
@@ -257,6 +257,7 @@ class ClienteDAO extends PersonaDAO
         $this->fec_plan=$fec_plan;
         $this->vigencia  = $vigencia;
         $this->gimnasio  = $gimnasio;
+        $this->servicio  = $servicio;
     }
 
     public function getCliente() {
@@ -273,8 +274,8 @@ class ClienteDAO extends PersonaDAO
              
                 $pdo = AccesoDB::getCon();
 
-                $sql_crear_cli = "INSERT INTO `clientes`(`correo_cli`,`pass_cli`,`nom_cli`,`fono_cli`,`fec_nac_cli`,`fec_plan_cli`,`vig_cli`,`tipo_cli`)
-                            VALUES(:correo,:pass,:nom,:fono,:fec_nac,:fec_plan,:vig,:gym)";
+                $sql_crear_cli = "INSERT INTO `clientes`(`correo_cli`,`pass_cli`,`nom_cli`,`fono_cli`,`fec_nac_cli`,`fec_plan_cli`,`vig_cli`,`tipo_cli`,`servicio_cli`)
+                            VALUES(:correo,:pass,:nom,:fono,:fec_nac,:fec_plan,:vig,:gym, :ser)";
 
 
                 $stmt = $pdo->prepare($sql_crear_cli);
@@ -286,6 +287,7 @@ class ClienteDAO extends PersonaDAO
                 $stmt->bindParam(":fec_plan", $this->fec_plan, PDO::PARAM_STR);
                 $stmt->bindParam(":vig", $this->vigencia, PDO::PARAM_BOOL);
                 $stmt->bindParam(":gym", $this->gimnasio, PDO::PARAM_INT);
+                $stmt->bindParam(":ser", $this->servicio, PDO::PARAM_INT);
                 $stmt->execute();
 
             } catch (Exception $e) {
@@ -342,7 +344,7 @@ class ClienteDAO extends PersonaDAO
 
                 if ($tipo == 1) {
                     $sql_mod_cli = "update clientes
-                            set  correo_cli = :correo, nom_cli = :nom, fono_cli = :fono ,fec_nac_cli = :fec_nac,fec_plan_cli = :fec_plan,  vig_cli = :vig, tipo_cli = :gym where id_cli =:id ";
+                            set  correo_cli = :correo, nom_cli = :nom, fono_cli = :fono ,fec_nac_cli = :fec_nac,fec_plan_cli = :fec_plan,  vig_cli = :vig, tipo_cli = :gym , servicio_cli = :ser where id_cli =:id ";
 
                             $stmt = $pdo->prepare($sql_mod_cli);
                 $stmt->bindParam(":correo", $this->correo, PDO::PARAM_STR);
@@ -352,6 +354,7 @@ class ClienteDAO extends PersonaDAO
                 $stmt->bindParam(":fec_plan", $this->fec_plan, PDO::PARAM_STR);
                 $stmt->bindParam(":vig", $this->vigencia, PDO::PARAM_BOOL);
                 $stmt->bindParam(":gym", $this->gimnasio, PDO::PARAM_INT);
+                $stmt->bindParam(":ser", $this->servicio, PDO::PARAM_INT);
                 $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
                 $stmt->execute();
                 }elseif ($tipo == 2) {

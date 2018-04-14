@@ -30,6 +30,7 @@
 			$gym = 0;
 		}
 		$vig = 1;
+		$ser = $_POST['ser'];
 		
 		$fun = new Funciones(); 
 		
@@ -45,7 +46,7 @@
 		}else{
 			$nueva_pass = $fun->generaPass();
 
-			$dao = new ClienteDAO('', $correo,md5($nueva_pass),$nom, $fono, $fec_nac_cli,$fec_plan_cli, $vig, $gym);
+			$dao = new ClienteDAO('', $correo,md5($nueva_pass),$nom, $fono, $fec_nac_cli,$fec_plan_cli, $vig, $gym, $ser);
 		
 			$crear_cli = $dao->crear_cliente();
 			$reg_evo = $dao->reg_evo($correo,$fec_evo,$est_cli,$peso_cli);

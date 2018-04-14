@@ -8,6 +8,61 @@ class Funciones
 
 
     /*///////////////////////////////////////
+    Cargar Alimentos
+    //////////////////////////////////////*/
+        public function cargar_ali() {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "SELECT a.id_nut_ali,a.desc_nut_ali, b.desc_nut_grup,if(a.vig_nut_ali = 1,'Si','No') vig FROM nut_ali a, nut_gru_ali b  where a.fk_id_ali_ga = b.id_nut_grup";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+    /*///////////////////////////////////////
+    Cargar Grupos de Alimentos
+    //////////////////////////////////////*/
+        public function cargar_g_a() {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "SELECT id_nut_grup,desc_nut_grup FROM nut_gru_ali where vig_nut_grup = 1";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+    /*///////////////////////////////////////
     Ver Borg
     //////////////////////////////////////*/
     public function cargar_borg($cli) {
@@ -464,7 +519,7 @@ class Funciones
 
         
                         $sql = "select a.nom_cli, a.correo_cli, a.fono_cli, a.fec_nac_cli,  (select est_evo  from evo_cli where fk_id_cli = a.id_cli order by fec_evo asc limit 1) est,
-                                (select peso_evo  from evo_cli where fk_id_cli = a.id_cli order by fec_evo asc limit 1) peso ,a.fec_plan_cli, a.vig_cli, a.tipo_cli
+                                (select peso_evo  from evo_cli where fk_id_cli = a.id_cli order by fec_evo asc limit 1) peso ,a.fec_plan_cli, a.vig_cli, a.tipo_cli, a.servicio_cli
                                 from clientes a where a.id_cli = :cli";
                                                 
 
@@ -616,16 +671,18 @@ class Funciones
     /*///////////////////////////////////////
     Cargar clientes
     //////////////////////////////////////*/
-        public function cargar_clientes_dd() {
+        public function cargar_clientes_dd($ser) {
 
             try{
                 
                 
                 $pdo = AccesoDB::getCon();
 
-
-        
-                        $sql = "SELECT id_cli, nom_cli FROM clientes where vig_cli = 1 order by nom_cli";
+                if ($ser == 1) {
+                    $sql = "SELECT id_cli, nom_cli FROM clientes where vig_cli = 1 and servicio_cli in (1,3) order by nom_cli";
+                }else if ($ser == 2) {
+                    $sql = "SELECT id_cli, nom_cli FROM clientes where vig_cli = 1 and servicio_cli in (2,3) order by nom_cli";
+                }  
                 
 
                 $stmt = $pdo->prepare($sql);

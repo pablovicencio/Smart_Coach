@@ -32,9 +32,10 @@
 		}else{
 			$vig = 0;
 		}
+		$ser = $_POST['ser'];
 
 
-			$dao = new ClienteDAO($cli, $correo,'',$nom, $fono, $fec_nac_cli,$fec_plan_cli, $vig, $gym);
+			$dao = new ClienteDAO($cli, $correo,'',$nom, $fono, $fec_nac_cli,$fec_plan_cli, $vig, $gym, $ser);
 			$mod_cli = $dao->modificar_cli($tipo);
 
 			if (isset($_POST['cambio'])) {
