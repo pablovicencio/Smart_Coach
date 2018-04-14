@@ -21,7 +21,8 @@
 			$super = 1;
 		}
 		$vig = 1;
-		$fb = $_POST['fb_co'];;
+		$fb = $_POST['fb_co'];
+		$tipo = $_POST['tipo'];
 		
 		
 		$fun = new Funciones(); 
@@ -38,7 +39,7 @@
 		}else{
 			$nueva_pass = $fun->generaPass();
 
-			$dao = new CoachDAO('',$nom, $correo, $fono, md5($nueva_pass),$vig,$super, $fb);
+			$dao = new CoachDAO('',$nom, $correo, $fono, md5($nueva_pass),$vig,$super, $fb, $tipo);
 		
 			$crear_co = $dao->crear_coach();
 			

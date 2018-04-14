@@ -31,16 +31,18 @@
 			$vig = 0;
 		}
 		$fb = $_POST['fb_co'];
+		
+			$tipo = $_POST['tipo'];
+			
 
-
-			$dao = new CoachDAO($coach, $nom, $correo, $fono, '', $vig, $super, $fb);
+			$dao = new CoachDAO($coach, $nom, $correo, $fono, '', $vig, $super, $fb, $tipo);
 			$mod_co = $dao->modificar_coach();
 
 			
 			if (count($mod_co)>0){
 			echo"<script type=\"text/javascript\">alert('Error de base de datos, comuniquese con el administrador'); window.location='../paginas_co/mod_co.php';</script>";    
 			} else {
-				echo"<script type=\"text/javascript\">alert('Coach ".$nom." modificado.'); window.location='../paginas_co/mod_co.php';		
+				echo"<script type=\"text/javascript\">alert('Coach ".$nom." modificado.'); window.location='../paginas_co/mod_co.php';
 				</script>"; 
 					}
 

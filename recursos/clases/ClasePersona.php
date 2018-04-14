@@ -109,8 +109,9 @@ class CoachDAO extends PersonaDAO
     
     private $super;
     private $fb;
+    private $tipo;
 
-    public function __construct($id=null,$nombre=null, $correo=null, $fono=null, $contraseña=null,$vigencia=null,$super=null, $fb=null) {
+    public function __construct($id=null,$nombre=null, $correo=null, $fono=null, $contraseña=null,$vigencia=null,$super=null, $fb=null, $tipo=null) {
         $this->id  = $id;
         $this->nombre  = $nombre;
         $this->correo  = $correo;
@@ -119,6 +120,7 @@ class CoachDAO extends PersonaDAO
         $this->vigencia  = $vigencia;
         $this->super  = $super;
         $this->fb  = $fb;
+        $this->tipo  = $tipo;
     }
 
     public function getCoach() {
@@ -136,8 +138,8 @@ class CoachDAO extends PersonaDAO
              
                 $pdo = AccesoDB::getCon();
 
-                $sql_crear_usu = "INSERT INTO `coach`(`correo_coach`,`pass_coach`,`nom_coach`,`fono_coach`,`vig_coach`,`super`,`fb_coach`)
-                            VALUES(:correo,:pass,:nom,:fono,:vig,:super,:fb)";
+                $sql_crear_usu = "INSERT INTO `coach`(`correo_coach`,`pass_coach`,`nom_coach`,`fono_coach`,`vig_coach`,`super`,`fb_coach`,`tipo_coach`)
+                            VALUES(:correo,:pass,:nom,:fono,:vig,:super,:fb, :tipo)";
 
 
                 $stmt = $pdo->prepare($sql_crear_usu);
@@ -148,6 +150,7 @@ class CoachDAO extends PersonaDAO
                 $stmt->bindParam(":vig", $this->vigencia, PDO::PARAM_BOOL);
                 $stmt->bindParam(":super", $this->super, PDO::PARAM_BOOL);
                 $stmt->bindParam(":fb", $this->fb, PDO::PARAM_STR);
+                $stmt->bindParam(":tipo", $this->tipo, PDO::PARAM_INT);
                 $stmt->execute();
         
 
@@ -169,7 +172,7 @@ class CoachDAO extends PersonaDAO
                 $pdo = AccesoDB::getCon();
 
                 $sql_mod_usu = "update coach
-                            set  correo_coach = :correo, nom_coach = :nom, fono_coach = :fono, vig_coach = :vig, fb_coach = :fb, super = :super
+                            set  correo_coach = :correo, nom_coach = :nom, fono_coach = :fono, vig_coach = :vig, fb_coach = :fb, super = :super, tipo_coach = :tipo
                             where id_coach =:id ";
 
 
@@ -182,6 +185,7 @@ class CoachDAO extends PersonaDAO
                 $stmt->bindParam(":fb", $this->fb, PDO::PARAM_STR);
                 $stmt->bindParam(":super", $this->super, PDO::PARAM_BOOL);
                 $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
+                $stmt->bindParam(":tipo", $this->tipo, PDO::PARAM_INT);
                 $stmt->execute();
 
         

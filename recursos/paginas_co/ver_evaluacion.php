@@ -18,7 +18,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<title>Smart Coach</title>
+<title>D3 - Ver Evaluación</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
@@ -29,7 +29,7 @@
 
 <body>
             <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-              <img class="img-fluid" src="recursos/img/logo/logo_d3safio3.png" alt="D3safio" width="292" height="60">
+              <img class="img-fluid" src="../img/logo/logo_d3safio3.png" alt="D3safio" width="150" height="30">
               </ul>
             </nav>
 <div class="container" style="padding-top: 5px">

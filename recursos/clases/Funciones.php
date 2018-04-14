@@ -243,7 +243,7 @@ class Funciones
 
 
         
-                        $sql = "select nom_coach, correo_coach, fono_coach,vig_coach,super,fb_coach from coach where id_coach = :co";
+                        $sql = "select nom_coach, correo_coach, fono_coach,vig_coach,super,fb_coach,tipo_coach from coach where id_coach = :co";
                                                 
 
                 $stmt = $pdo->prepare($sql);
@@ -340,7 +340,9 @@ class Funciones
 
 
         
-                        $sql = "select a.id_rut, b.nom_ejer, c.nom_musc,a.series_rut, a.rep_rut, a.pausas_rut, a.vel_rut,b.nota_ejer, a.nota_rut, SUBSTR(b.link_ejer, 33) video
+                        $sql = "select a.id_rut, b.nom_ejer, c.nom_musc,a.series_rut, a.rep_rut, a.pausas_rut, 
+                        case when a.vel_rut = 1 then 'Lenta' when a.vel_rut = 2 then 'Moderada' when a.vel_rut = 3 then 'Rapida' end vel_rut ,
+                        b.nota_ejer, a.nota_rut, SUBSTR(b.link_ejer, 33) video
                                 from rutina a inner join ejercicios b on a.fk_id_ejer = b.id_ejer 
                                 inner join musculos c on b.fk_id_musc = c.id_musc
                                 where  a.fk_id_cli = :cli and a.fec_rut = :fec and a.vig_rut = 1";
@@ -494,7 +496,7 @@ class Funciones
 
 
         
-                        $sql = "select a.id_rut, a.fk_id_ejer, b.nom_ejer, c.nom_musc, a.series_rut, a.rep_rut, a.pausas_rut,a.vel_rut,a.nota_rut
+                        $sql = "select a.id_rut, a.fk_id_ejer, b.nom_ejer, c.nom_musc, a.series_rut, a.rep_rut, a.pausas_rut,case when a.vel_rut = 1 then 'Lenta' when a.vel_rut = 2 then 'Moderada' when a.vel_rut = 3 then 'Rapida' end vel_rut,a.nota_rut
                                     from rutina a inner join ejercicios b on a.fk_id_ejer = b.id_ejer 
                                     inner join musculos c on b.fk_id_musc = c.id_musc
                                     where a.fk_id_cli = :cli and a.fec_rut = :fec and a.vig_rut = 1";

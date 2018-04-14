@@ -24,7 +24,7 @@ if (isset($_GET{'dato'})) {
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<title>Smart Coach</title>
+<title>D3safío - Evolución</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
@@ -33,24 +33,11 @@ if (isset($_GET{'dato'})) {
   <link href="../estilo.css" rel="stylesheet" type="text/css" />
 
 
-
-<style>
- #div1, #div2 {
-    float: left;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    margin: 5px;
-    padding: 5px;
-    border: 1px solid #E6E6E6;
-    -webkit-border-radius: 4px; /* recuerda la primera frase */
-    -moz-border-radius: 4px; /* si quieres todas las esquinas iguales */
-</style>
 </head>
 
 <body>
            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-              <a  href="index_usu.php"><img class="img-fluid" src="../img/logo/logo_d3safio3.png" alt="D3safio" width="292" height="60"></a>
+              <a  href="index_usu.php"><img class="img-fluid" src="../img/logo/logo_d3safio3.png" alt="D3safio" width="150" height="30"></a>
               <ul class="navbar-nav ml-auto" >
               <li class="nav-item"><a class="nav-link" href="index_usu.php">Hoy</a></li>
                 <li class="nav-item"><a class="nav-link" href="calendario.php">Calendario</a></li>

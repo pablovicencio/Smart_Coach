@@ -46,7 +46,7 @@ $week = 1;
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<title>Smart Coach</title>
+<title>D3 - Cargar Entrenamiento</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
@@ -213,7 +213,7 @@ function storeTblValues()
 
 <body>
       <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-              <a  href="entrenamiento.php"><img class="img-fluid" src="../img/logo/logo_d3safio3.png" alt="D3safio" width="292" height="60"></a>
+              <a  href="entrenamiento.php"><img class="img-fluid" src="../img/logo/logo_d3safio3.png" alt="D3safio" width="150" height="30"></a>
               <ul class="navbar-nav ml-auto" >
                 <!-- Dropdown -->
                     <li class="nav-item dropdown">
@@ -438,9 +438,14 @@ if (strtotime('+1 month',strtotime($row['fec_plan_cli'])) >= time()) {
                           </div>
 
                           <div class="form-group row">
-                            <label  class="col-sm-3 col-form-label" >Velocidad:</label>
+                            
                             <div class="col-sm-9">
-                              <input type="number" class="form-control" id="vel" style="width: 60%; display: inline-block;" name="Velocidad" placeholder="Velocidad"> <span>seg</span>
+                              <select size="1" name="vel" class="custom-select" id="vel" type="text">
+                                <option value="" selected disabled>Velocidad de Ejecución</option>
+                                <option value="1" >Lenta</option>
+                                <option value="2" >Moderada</option>
+                                <option value="3" >Rapida</option>
+                              </select>
                             </div>
                           </div>
             </div>

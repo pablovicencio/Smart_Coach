@@ -18,7 +18,7 @@ if( isset($_SESSION['id']) and $_SESSION['tipo'] == 1 ){
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<title>Smart Coach</title>
+<title>D3 - Modificar Coach</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
@@ -50,11 +50,21 @@ function mod(co) {
 
         if ((result[0].vig_coach)==1) {  
           $('#vig').prop('checked', true);
-              } 
+              }else  {
+                $('#vig').prop('checked', false);
+              }
 
         if ((result[0].super)==1) {  
           $('#super').prop('checked', true);
-              } 
+              } else  {
+                $('#super').prop('checked', false);
+              }
+
+        if ((result[0].tipo_coach)==1) {  
+          $('#tipo_e').prop('checked', true);
+              } else if ((result[0].tipo_coach)==2) {
+                $('#tipo_n').prop('checked', true);
+              }
 
   }
   })
@@ -71,7 +81,7 @@ function mod(co) {
   
   
       <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-              <a  href="entrenamiento.php"><img class="img-fluid" src="../img/logo/logo_d3safio3.png" alt="D3safio" width="292" height="60"></a>
+              <a  href="entrenamiento.php"><img class="img-fluid" src="../img/logo/logo_d3safio3.png" alt="D3safio" width="150" height="30"></a>
               <ul class="navbar-nav ml-auto" >
                 <!-- Dropdown -->
                     <li class="nav-item dropdown">
@@ -145,6 +155,14 @@ function mod(co) {
           <div class="form-check">
             <label class="form-check-label">
             <input class="form-check-input" type="checkbox" name="super" id="super"> Super Usuario
+            </label>
+          </div>
+           <div>
+            <label class="radio-inline">
+              <input type="radio"  name="tipo" id="tipo_e" value="1">Entrenador
+            </label>
+            <label class="radio-inline">
+              <input type="radio"  name="tipo" id="tipo_n" value="2">Nutricionista
             </label>
           </div>
           <div class="form-check">
