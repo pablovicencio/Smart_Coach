@@ -24,11 +24,11 @@ Clase abstracta Persona
                 
                 $pdo = AccesoDB::getCon();
 
-                $sql_login = "select id_coach id, correo_coach correo, pass_coach pass, nom_coach nom, super, 1 tipo,0 eva
+                $sql_login = "select id_coach id, correo_coach correo, pass_coach pass, nom_coach nom, super, tipo_coach tipo,0 eva
                                 from coach 
                                 where vig_coach = 1 and correo_coach = :correo
                                 union all 
-                                select a.id_cli, a.correo_cli,a.pass_cli,a.nom_cli,0 ,2 tipo, IFNULL(b.id_evo,0) 
+                                select a.id_cli, a.correo_cli,a.pass_cli,a.nom_cli,0 ,3 tipo, IFNULL(b.id_evo,0) 
                                 from clientes a left join evaluacion b on a.id_cli = b.fk_id_cli
                                 where a.vig_cli = 1 and a.correo_cli = :correo and sysdate() BETWEEN a.fec_plan_cli and DATE_ADD(a.fec_plan_cli, INTERVAL 1 MONTH);";
 
@@ -51,7 +51,11 @@ Clase abstracta Persona
                         
                         if ($row['tipo'] == 1 ) {
                             echo"<script type=\"text/javascript\">      window.location='../paginas_co/entrenamiento.php';</script>"; 
-                        }else if ($row['tipo'] == 2 ) {
+                             }else if ($row['tipo'] == 2 ) {
+                                echo"<script type=\"text/javascript\">       window.location='../paginas_co/crear_cli.php';</script>"; 
+                             
+
+                        }else if ($row['tipo'] == 3 ) {
 
                             if ($row['eva'] == 0 ) {
                                  echo"<script type=\"text/javascript\">      window.location='../paginas_cli/evaluacion.php';</script>"; 
