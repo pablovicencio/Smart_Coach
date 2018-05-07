@@ -8,6 +8,332 @@ class Funciones
 
 
     /*///////////////////////////////////////
+    Cargar evaluacion de dieta
+    //////////////////////////////////////*/
+        public function cargar_eva_die($cli){
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select CASE a.horario_eva
+                            WHEN 0 THEN 'Sin Hambre'
+                            WHEN 1 THEN 'Hambre en la Mañana'
+                            WHEN 2 THEN 'Hambre en la Media Mañana'
+                            WHEN 3 THEN 'Hambre en la Tarde'
+                            WHEN 4 THEN 'Hambre en la Noche'
+                            END eva, a.seg_dieta_eva, fec_eva
+                                                         
+                            from eva_dieta a 
+                            inner join nut_dieta b on a.fk_eva_dieta = b.id_nut_dieta 
+                            where b.vig_nut_dieta = 1 and a.fk_eva_cli = :cli
+                            order by fec_eva desc";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":cli", $cli, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+    /*///////////////////////////////////////
+    Cargar coach Dieta
+    //////////////////////////////////////*/
+        public function coach_Dieta($cli) {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select b.nom_coach, b.fb_coach
+                                from nut_dieta a inner join coach b on a.fk_dieta_coach = b.id_coach
+                                where  a.fk_dieta_cli =:cli  and a.vig_nut_dieta = 1";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":cli", $cli, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+
+    /*///////////////////////////////////////
+    Cargar dieta cliente 
+    //////////////////////////////////////*/
+        public function cargar_dieta($cli,$com) {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select a.id_nut_dieta, d.desc_nut_ali, b.cant_nut_ali,if(e.desc_nut_uni=0,' ',e.desc_nut_uni) uni,e.img_nut_uni, b.nota_nut_det
+                                from nut_dieta a, nut_det_dieta b left join nut_uni_med e on b.fk_nut_det_uni = e.id_nut_uni
+                                , nut_comidas c, nut_ali d
+                                where a.id_nut_dieta = b.fk_nut_dieta and a.vig_nut_dieta = 1 and b.fk_nut_det_com = c.id_nut_com 
+                                and b.fk_nut_det_ali = d.id_nut_ali and a.fk_dieta_cli = :cli and b.fk_nut_det_com = :com";
+                                                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":cli", $cli, PDO::PARAM_INT);
+                $stmt->bindParam(":com", $com, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+
+    /*///////////////////////////////////////
+    Cargar dieta actual carga dieta
+    //////////////////////////////////////*/
+        public function cargar_dieta_act($cli) {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select c.desc_nut_com, d.desc_nut_ali, b.cant_nut_ali,if(e.desc_nut_uni=0,' ',e.desc_nut_uni) uni, b.nota_nut_det
+                                from nut_dieta a, nut_det_dieta b left join nut_uni_med e on b.fk_nut_det_uni = e.id_nut_uni
+                                , nut_comidas c, nut_ali d
+                                where a.id_nut_dieta = b.fk_nut_dieta and a.vig_nut_dieta = 1 and b.fk_nut_det_com = c.id_nut_com 
+                                and b.fk_nut_det_ali = d.id_nut_ali and a.fk_dieta_cli = :cli";
+                                                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":cli", $cli, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+
+
+    /*///////////////////////////////////////
+    Cargar unidades de medida carga dieta
+    //////////////////////////////////////*/
+        public function cargar_uni_med_ali() {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select id_nut_uni, desc_nut_uni
+                                from nut_uni_med where vig_nut_uni = 1";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+    /*///////////////////////////////////////
+    Cargar alimentos carga dieta
+    //////////////////////////////////////*/
+        public function cargar_alimentos($gr) {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select id_nut_ali, desc_nut_ali
+                                from nut_ali where vig_nut_ali = 1 and fk_id_ali_ga = :gr";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":gr", $gr, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+
+    /*///////////////////////////////////////
+    Cargar grupos de alimentos carga dieta
+    //////////////////////////////////////*/
+        public function cargar_grupo_ali() {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select id_nut_grup, desc_nut_grup
+                                from nut_gru_ali where vig_nut_grup = 1";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+
+
+    /*///////////////////////////////////////
+    Cargar horario comida
+    //////////////////////////////////////*/
+        public function cargar_horarios($com) {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = 'select CONCAT(DATE_FORMAT(desde_nut_com,"%H:%i"), \'-\', DATE_FORMAT(hasta_nut_com,"%H:%i")) horario
+                                from nut_comidas where vig_nut_com = 1 and id_nut_com = :com';
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":com", $com, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetchColumn();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+
+    /*///////////////////////////////////////
+    Cargar comidas para carga dieta
+    //////////////////////////////////////*/
+        public function cargar_comidas() {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select id_nut_com, desc_nut_com
+                                from nut_comidas where vig_nut_com = 1";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+    /*///////////////////////////////////////
+    Cargar alimento para modificar
+    //////////////////////////////////////*/
+        public function alimento($ali) {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select *
+                                from nut_ali where id_nut_ali = :ali";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":ali", $ali, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+
+
+
+    /*///////////////////////////////////////
     Cargar Alimentos
     //////////////////////////////////////*/
         public function cargar_ali() {

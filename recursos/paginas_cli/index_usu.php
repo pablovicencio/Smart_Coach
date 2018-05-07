@@ -16,6 +16,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>D3safío</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
@@ -36,19 +37,38 @@ f.btnAc.disabled=true;
 return true}
 
 </script>
+<style>
+ 
+@media (max-width: 800px) {
+    
+        body{font-size: 2.5vw;}
+        #tabla{width: 100%;}
+        #borg{width: 100%;}
+        
+
+
+}
+
+</style>
 
 </head>
 
 <body>
-            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+             <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
               <a  href="index_usu.php"><img class="img-fluid" src="../img/logo/logo_d3safio3.png" alt="D3safio" width="150" height="30"></a>
-              <ul class="navbar-nav ml-auto" >
-              <li class="nav-item"><a class="nav-link" href="index_usu.php">Hoy</a></li>
-                <li class="nav-item"><a class="nav-link" href="calendario.php">Calendario</a></li>
-                <li class="nav-item"><a class="nav-link" href="evolucion.php">Evolución</a></li>
-                <li class="nav-item"><a class="nav-link" href="mi_cuenta.php">Mi Cuenta</a></li>
-                <li class="nav-item"><a class="nav-link" href="../controles/logout.php" onclick="return confirm('¿Deseas finalizar sesión?');">Cerrar Sesión</a></li>
-              </ul>
+              <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#navb" aria-expanded="false">
+              <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="navbar-collapse collapse" id="navb" style="">
+                  <ul class="navbar-nav ml-auto">
+                  <li class="nav-item"><a class="nav-link" href="index_usu.php">Hoy</a></li>
+                    <li class="nav-item"><a class="nav-link" href="calendario.php">Calendario</a></li>
+                    <li class="nav-item"><a class="nav-link" href="nutricion.php">Nutrición</a></li>
+                    <li class="nav-item"><a class="nav-link" href="evolucion.php">Evolución</a></li>
+                    <li class="nav-item"><a class="nav-link" href="mi_cuenta.php">Mi Cuenta</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../controles/logout.php" onclick="return confirm('¿Deseas finalizar sesión?');">Cerrar Sesión</a></li>
+                  </ul>
+              </div>
             </nav>
 <div class="container-fluid" style="padding-top: 5px">
 
@@ -77,14 +97,14 @@ if (strtotime('+1 month',strtotime($row['fec_plan_cli'])) >= time()) {
               $hoy = date('Y-m-d', time());
               $re1 = $fun->coach_rutina($id,$hoy);
                foreach($re1 as $row1){
-                echo '<a href="https://m.me/'.$row1['fb_coach'].'" class="btn btn-primary" target="_blank">Mensaje de Facebook a '.$row1['nom_coach'].'</a>';
+                echo '<a href="https://m.me/'.$row1['fb_coach'].'" class="btn btn-outline-primary" target="_blank"><img src="../img/me.png" alt="messenger" height="22" width="22"> '.$row1['nom_coach'].'</a>';
                }
               
             
 ?>
 <br>
 <br>
-         
+<div class="table-responsive">
  <table class="table table-sm table-dark" id="tabla" name="tabla">
   <thead>
     <tr>
@@ -126,13 +146,14 @@ if (strtotime('+1 month',strtotime($row['fec_plan_cli'])) >= time()) {
   
   </tbody>
 </table>
+</div>
 
 
 <form role="form" action="../controles/control_enviarBorg.php" method="post">
     <div name="borg" >
-      <input type="hidden" name="id_rut" value=<?php echo ($row['id_rut']);?>>
+      <input type="hidden" name="id_rut" value="<?php echo ($row['id_rut']);?>">
       <label for="sel1">¿Como sentiste tu entrenamiento el día de hoy?</label>
-      <select class="form-control" id="borg" name="borg">
+      <select class="form-control" id="borg" name="borg" required>
         <option value="1">Muy, muy ligero </option>
         <option value="2">Muy ligero</option>
         <option value="3">Ligero</option>

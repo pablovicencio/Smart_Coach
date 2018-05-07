@@ -16,6 +16,7 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>D3 - Evaluación</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
@@ -32,15 +33,33 @@ return true}
 
 
 </script>
+<style>
+ 
+@media (max-width: 800px) {
+    
+        body{font-size: 2.5vw;}
+        
+
+
+}
+
+</style>
 </head>
 
 <body>
-            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-              <img class="img-fluid" src="../img/logo/logo_d3safio3.png" alt="D3safio" width="150" height="30">
-              <ul class="navbar-nav ml-auto" >
+
+ <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+              <a  href="index_usu.php"><img class="img-fluid" src="../img/logo/logo_d3safio3.png" alt="D3safio" width="150" height="30"></a>
+              <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#navb" aria-expanded="false">
+              <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="navbar-collapse collapse" id="navb" style="">
+                  <ul class="navbar-nav ml-auto" >
                 <li class="nav-item"><a class="nav-link" href="../controles/logout.php" onclick="return confirm('¿Deseas finalizar sesión?');">Cerrar Sesión</a></li>
               </ul>
+              </div>
             </nav>
+
 <div class="container" style="padding-top: 5px">
 
 <div class="row">

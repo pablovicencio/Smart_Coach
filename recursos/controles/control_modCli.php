@@ -1,6 +1,6 @@
 <?php
  session_start();
-	if(  isset($_SESSION['id']) and $_SESSION['tipo'] == 1  ){
+	if(  isset($_SESSION['id']) and ($_SESSION['tipo'] == 1 or $_SESSION['tipo'] == 2 ) ){
 		//Si la sesión esta seteada no hace nada
  		$us = $_SESSION['id'];
 	}

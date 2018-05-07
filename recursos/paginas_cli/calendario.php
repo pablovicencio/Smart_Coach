@@ -39,6 +39,7 @@ $week = 1;
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>D3 - Entrenamiento</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
@@ -99,6 +100,23 @@ function modal(fec_rut,fec,nom,cli) {
 
 
 </script>
+<style>
+ 
+@media (max-width: 800px) {
+    
+        body{font-size: 2.5vw;}
+        #modal-dialog{width: auto;}
+        .td-cal{width:45px;
+                height: 25px;
+                background-color:white;}
+
+        #calendario{padding: .2rem;}
+        .table th{padding: .2rem;}
+
+
+}
+
+</style>
 
 
 </head>
@@ -106,13 +124,19 @@ function modal(fec_rut,fec,nom,cli) {
 <body>
            <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
               <a  href="index_usu.php"><img class="img-fluid" src="../img/logo/logo_d3safio3.png" alt="D3safio" width="150" height="30"></a>
-              <ul class="navbar-nav ml-auto" >
-              <li class="nav-item"><a class="nav-link" href="index_usu.php">Hoy</a></li>
-                <li class="nav-item"><a class="nav-link" href="calendario.php">Calendario</a></li>
-                <li class="nav-item"><a class="nav-link" href="evolucion.php">Evolución</a></li>
-                <li class="nav-item"><a class="nav-link" href="mi_cuenta.php">Mi Cuenta</a></li>
-                <li class="nav-item"><a class="nav-link" href="../controles/logout.php" onclick="return confirm('¿Deseas finalizar sesión?');">Cerrar Sesión</a></li>
-              </ul>
+              <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#navb" aria-expanded="false">
+              <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="navbar-collapse collapse" id="navb" style="">
+                  <ul class="navbar-nav ml-auto">
+                  <li class="nav-item"><a class="nav-link" href="index_usu.php">Hoy</a></li>
+                    <li class="nav-item"><a class="nav-link" href="calendario.php">Calendario</a></li>
+                    <li class="nav-item"><a class="nav-link" href="nutricion.php">Nutrición</a></li>
+                    <li class="nav-item"><a class="nav-link" href="evolucion.php">Evolución</a></li>
+                    <li class="nav-item"><a class="nav-link" href="mi_cuenta.php">Mi Cuenta</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../controles/logout.php" onclick="return confirm('¿Deseas finalizar sesión?');">Cerrar Sesión</a></li>
+                  </ul>
+              </div>
             </nav>
 <div class="container-fluid" style="padding-top: 5px">
 
@@ -135,7 +159,7 @@ if (strtotime('+1 month',strtotime($row['fec_plan_cli'])) >= time()) {
 <a class="badge badge-dark"  href=calendario.php?dato=<?php echo date("Y-m",(strtotime("-1 month", $fecha))).'&cli='.$id;?> class="l" style='margin-right: 6em'>Anterior</a>
 <a class="badge badge-dark"  href=calendario.php?dato=<?php echo date("Y-m",(strtotime("+1 month", $fecha))).'&cli='.$id;?> class="l">Siguiente</a>
 
-
+<div>
 <table border="1" class="table table-bordered" style="width: 70%; height: 35%;">
 
     <thead class="thead-inverse">
@@ -169,7 +193,7 @@ if (strtotime('+1 month',strtotime($row['fec_plan_cli'])) >= time()) {
               
               
     
-              echo '<td class="td-cal">';
+              echo '<td class="td-cal" id="calendario">';
               echo isset($days[$i]) ? '<a class="badge badge-dark" title="Cargar Entrenamiento" href="#modal" data-id="'.$days[$i].'" data-toggle="modal" data-target="#modal" onclick="modal(\''.($fec.'-'.$days[$i]).'\',\''.strftime("%A %d %b %Y",(strtotime($fec.'-'.$days[$i]))).'\',\''.$row['nom_cli'].'\',\''.$id.'\');">'.$days[$i].'</a>' : ''; 
 
 
@@ -188,11 +212,13 @@ if (strtotime('+1 month',strtotime($row['fec_plan_cli'])) >= time()) {
 
     </tbody>
     </table> 
+    
+  </div>
 </center>
 
 </div>
 <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document" style="max-width: 70%">
+  <div class="modal-dialog" role="document" style="max-width: 90%" id="modal-dialog">
     <div class="modal-content" >
       <div class="modal-header">
         <h5 class="modal-title" id="ModalLabel">Entrenamiento</h5>
