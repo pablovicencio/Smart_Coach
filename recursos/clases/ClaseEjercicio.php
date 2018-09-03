@@ -36,11 +36,11 @@ public function getEjercicio() {
              
                 $pdo = AccesoDB::getCon();
 
-                $sql_crear_suc = "INSERT INTO `ejercicios`(`nom_ejer`,`link_ejer`,`nota_ejer`,`fk_id_musc`,`vig_ejer`,`tipo_ejer`)
+                $sql_crear_ejer = "INSERT INTO `ejercicios`(`nom_ejer`,`link_ejer`,`nota_ejer`,`fk_id_musc`,`vig_ejer`,`tipo_ejer`)
                             VALUES(:nom,:link,:nota,:musc, :vig, :gym)";
                 
 
-                $stmt = $pdo->prepare($sql_crear_suc);
+                $stmt = $pdo->prepare($sql_crear_ejer);
                 $stmt->bindParam(":nom", $this->nombre, PDO::PARAM_STR);
                 $stmt->bindParam(":link", $this->link, PDO::PARAM_STR);
                 $stmt->bindParam(":nota", $this->nota, PDO::PARAM_STR);
@@ -83,7 +83,7 @@ public function getEjercicio() {
                 $stmt->bindParam(":musc", $musc, PDO::PARAM_INT);
                 $stmt->bindParam(":vig", $this->vigencia, PDO::PARAM_BOOL);
                 $stmt->bindParam(":gym", $this->gimnasio, PDO::PARAM_BOOL);
-                $stmt->bindParam(":id", $this->id, PDO::PARAM_STR);
+                $stmt->bindParam(":id", $this->id, PDO::PARAM_INT);
 
                 $stmt->execute();
                         

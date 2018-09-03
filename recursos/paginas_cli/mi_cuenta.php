@@ -17,6 +17,7 @@ if( isset($_SESSION['id']) ){
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>D3 - Mi Cuenta</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
@@ -31,8 +32,30 @@ f.btnAc.value="Modificando Cuenta";
 f.btnAc.disabled=true;
 return true}
 
+function evo() {
+  if($("#cambio").is(':checked')) { 
+        $('#est_cli').removeAttr('readonly');
+        $('#peso_cli').removeAttr('readonly');
+        }else{
+          $('#est_cli').prop('readonly','readonly');
+          $('#peso_cli').prop('readonly','readonly');
+        }
+}
+
 
 </script>
+<style>
+ 
+@media (max-width: 800px) {
+    
+        body{font-size: 2.5vw;}
+        
+
+
+}
+
+</style>
+
 
 </head>
 
@@ -42,13 +65,19 @@ return true}
   
        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
               <a  href="index_usu.php"><img class="img-fluid" src="../img/logo/logo_d3safio3.png" alt="D3safio" width="150" height="30"></a>
-              <ul class="navbar-nav ml-auto" >
-              <li class="nav-item"><a class="nav-link" href="index_usu.php">Hoy</a></li>
-                <li class="nav-item"><a class="nav-link" href="calendario.php">Calendario</a></li>
-                <li class="nav-item"><a class="nav-link" href="evolucion.php">Evolución</a></li>
-                <li class="nav-item"><a class="nav-link" href="mi_cuenta.php">Mi Cuenta</a></li>
-                <li class="nav-item"><a class="nav-link" href="../controles/logout.php" onclick="return confirm('¿Deseas finalizar sesión?');">Cerrar Sesión</a></li>
-              </ul>
+              <button class="navbar-toggler navbar-toggler-right collapsed" type="button" data-toggle="collapse" data-target="#navb" aria-expanded="false">
+              <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="navbar-collapse collapse" id="navb" style="">
+                  <ul class="navbar-nav ml-auto">
+                  <li class="nav-item"><a class="nav-link" href="index_usu.php">Hoy</a></li>
+                    <li class="nav-item"><a class="nav-link" href="calendario.php">Calendario</a></li>
+                    <li class="nav-item"><a class="nav-link" href="nutricion.php">Nutrición</a></li>
+                    <li class="nav-item"><a class="nav-link" href="evolucion.php">Evolución</a></li>
+                    <li class="nav-item"><a class="nav-link" href="mi_cuenta.php">Mi Cuenta</a></li>
+                    <li class="nav-item"><a class="nav-link" href="../controles/logout.php" onclick="return confirm('¿Deseas finalizar sesión?');">Cerrar Sesión</a></li>
+                  </ul>
+              </div>
             </nav>
 <div class="container" style="padding-top: 5px">
 <form action="../controles/control_modCli_MC.php" method="POST" onsubmit="return validar(this)">
@@ -108,19 +137,19 @@ return true}
 <div class="col-12">
    <hr>
     <h3>Modificar Contraseña</h3>
-    <div class="col-4">
+    <div class="col-12">
       <div class="form-group">
             <label for="nom">Contraseña Actual:</label>
             <input type="password" class="form-control" id="pass" name="pass" maxlength="6" required>
           </div>
     </div>
-    <div class="col-4">
+    <div class="col-12">
       <div class="form-group">
             <label for="nom">Nueva Contraseña (6 caracteres):</label>
             <input type="password" class="form-control" id="nueva_pass" name="nueva_pass" maxlength="6" required>
           </div>
     </div>
-    <div class="col-4">
+    <div class="col-12">
       <div class="form-group">
             <label for="nom">Confirmar Nueva Contraseña (6 caracteres)</label>
             <input type="password" class="form-control" id="nueva_pass1" name="nueva_pass1" maxlength="6" required>

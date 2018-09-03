@@ -57,6 +57,12 @@ $week = 1;
 
 <script language="javascript">
 
+  $(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+
+
+
 function show(id) {
   console.log(id);
   var cli = parseInt(document.getElementById('cli').innerText);
@@ -98,14 +104,13 @@ function modal(fec_rut,fec,nom,cli) {
           result[i].rep_rut + "</td><td>" +
           result[i].pausas_rut + "</td><td>" +
           result[i].vel_rut + "</td><td>" +
+          result[i].circuito+"</td><td>"+
           result[i].nota_rut + "</td><td>"+
           '<input type="button" value="X" onclick="deleteRow1('+result[i].id_rut+');deleteRow(this)" class="btn btn-outline-danger">' + "</td></tr>"
      
           $("#tabla").append(nuevafila)
         }
   
-
-
       }
   })
     
@@ -138,9 +143,16 @@ function agregar() {
   td = tr.insertCell(tr.cells.length);
   td.innerHTML = document.forms['carga'].pausas.value;
   td = tr.insertCell(tr.cells.length);
+  td.innerHTML = document.forms['carga'].vel.options[vel.selectedIndex].innerText;
+  td = tr.insertCell(tr.cells.length);
+  td.style.display= "none";
   td.innerHTML = document.forms['carga'].vel.value;
   td = tr.insertCell(tr.cells.length);
+  td.innerHTML ='<input type="number" class="form-control" id="circ" name="circ" style="width: 25%;">';
+  td = tr.insertCell(tr.cells.length);
   td.innerHTML = document.forms['carga'].nota.value;
+
+  
   
   td = tr.insertCell(tr.cells.length);
   td.innerHTML ='<input type="button" value="X" onclick="deleteRow(this)" class="btn btn-outline-danger">';
@@ -170,8 +182,10 @@ function deleteRow1( rut) {
 }
 
 
+
 function storeTblValues()
         {
+        
             var TableData = new Array();
     
             $('#tabla tr').each(function(row, tr){
@@ -181,23 +195,28 @@ function storeTblValues()
                     , "series" :$(tr).find('td:eq(4)').text()
                     , "rep" : $(tr).find('td:eq(5)').text()
                     , "pausas" : $(tr).find('td:eq(6)').text()
-                    , "vel" : $(tr).find('td:eq(7)').text()
-                    , "nota" : $(tr).find('td:eq(8)').text()
+                    , "vel" : $(tr).find('td:eq(8)').text()
+                    , "nota" : $(tr).find('td:eq(10)').text()
+                    , "circ" : $(tr).find('td:eq(9)').find('input').val()
                 }
+                var cir = $(tr).find('td:eq(9)').find('input').val();
+                var ser = $(tr).find('td:eq(4)').text();
+
+                console.log(cir);
+
             }); 
             TableData.shift();  // first row will be empty - so remove
             TableData = $.toJSON(TableData);
-            console.log(TableData);
+            //console.log(TableData);
             var cli = parseInt(document.getElementById('cli').innerText);
             var nota = (document.forms['carga'].nota.value);
             var fec_rut = (document.getElementById('fec_rut').innerText);
-            console.log(fec_rut);
+            //console.log(fec_rut);
             $('#tbConvertToJSON').val('JSON array: \n\n' + TableData.replace(/},/g, "},\n"));
             $.ajax({
                 type: "POST",
                 url: "../controles/control_cargaEntrenamiento.php",
                 data:   { "data" : TableData, "cli":cli,"fec_rut":fec_rut},
-                //data:   $("#new_v").serialize(), 
                 cache: false,
                 success: function(respuesta){
             alert(respuesta);
@@ -205,6 +224,7 @@ function storeTblValues()
         }
 
             });
+            
         }
 
 
@@ -224,7 +244,7 @@ function storeTblValues()
                       </div>
                     </li>
                 <li class="nav-item"><a class="nav-link" href="entrenamiento.php">Entrenamiento</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Dieta</a></li>
+                <li class="nav-item"><a class="nav-link" href="nutricion.php">Nutrición</a></li>
                 <!-- Dropdown -->
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">Coach</a>
@@ -416,7 +436,7 @@ if (strtotime('+1 month',strtotime($row['fec_plan_cli'])) >= time()) {
                           <div class="form-group row">
                             <label class="col-sm-4 col-form-label" >Series:</label>
                             <div class="col-sm-6">
-                            <input type="number" class="form-control" id="series" style="width: 60%;" name="Series">
+                            <input type="number" class="form-control" id="series" style="width: 60%;" name="series" data-toggle="tooltip" data-html="true" title="<b>Atencion!</b> si es circuito, corresponde a los ciclos de repeticion, por lo que tiene ser el mismo número para todos los ejercicios del circuito.">
                             </div>
                           </div>
 
@@ -474,6 +494,7 @@ if (strtotime('+1 month',strtotime($row['fec_plan_cli'])) >= time()) {
       <th scope="col">Repeticiones</th>
       <th scope="col">Pausas</th>
       <th scope="col">Velocidad</th>
+      <th scope="col">Circuito</th>
       <th scope="col">Nota</th>
 
     </tr>

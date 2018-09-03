@@ -7,6 +7,442 @@ class Funciones
 {
 
 
+
+    /*///////////////////////////////////////
+    Modal Ejercicio
+    //////////////////////////////////////*/
+        public function ver_ejercicio($cli, $rut) {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select a.id_rut, b.nom_ejer, c.nom_musc, a.rep_rut, a.pausas_rut, 
+                        case when a.vel_rut = 1 then 'Lenta' when a.vel_rut = 2 then 'Moderada' when a.vel_rut = 3 then 'Rapida' end vel_rut ,
+                        b.nota_ejer, a.nota_rut, SUBSTR(b.link_ejer, 33) video,if(a.circuito=0,concat(series_rut,' Series'),'Circuito') series
+                                from rutina a inner join ejercicios b on a.fk_id_ejer = b.id_ejer 
+                                inner join musculos c on b.fk_id_musc = c.id_musc
+                                where  a.fk_id_cli = :cli and a.id_rut = :rut and a.vig_rut = 1";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":cli", $cli, PDO::PARAM_INT);
+                $stmt->bindParam(":rut", $rut, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+
+
+    /*///////////////////////////////////////
+    Cargar circuito
+    //////////////////////////////////////*/
+        public function cargar_circuito($cli,$fec, $circuito) {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select a.id_rut, b.nom_ejer, c.nom_musc
+                                from rutina a inner join ejercicios b on a.fk_id_ejer = b.id_ejer 
+                                inner join musculos c on b.fk_id_musc = c.id_musc
+                                where  a.fk_id_cli = :cli and a.fec_rut = :fec and a.vig_rut = 1 and a.circuito = :circ";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":cli", $cli, PDO::PARAM_INT);
+                $stmt->bindParam(":fec", $fec, PDO::PARAM_STR);
+                $stmt->bindParam(":circ", $circuito, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+
+
+
+    /*///////////////////////////////////////
+    Cargar circuitos diario
+    //////////////////////////////////////*/
+        public function cargar_circuitos($cli,$fec) {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select distinct circuito , series_rut
+                        from rutina 
+                        where fk_id_cli = :cli and fec_rut = :fec and vig_rut = 1 order by 1";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":cli", $cli, PDO::PARAM_INT);
+                $stmt->bindParam(":fec", $fec, PDO::PARAM_STR);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+
+
+
+    /*///////////////////////////////////////
+    Cargar evaluacion de dieta
+    //////////////////////////////////////*/
+        public function cargar_eva_die($cli){
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select CASE a.horario_eva
+                            WHEN 0 THEN 'Sin Hambre'
+                            WHEN 1 THEN 'Hambre en la Mañana'
+                            WHEN 2 THEN 'Hambre en la Media Mañana'
+                            WHEN 3 THEN 'Hambre en la Tarde'
+                            WHEN 4 THEN 'Hambre en la Noche'
+                            END eva, a.seg_dieta_eva, fec_eva
+                                                         
+                            from eva_dieta a 
+                            inner join nut_dieta b on a.fk_eva_dieta = b.id_nut_dieta 
+                            where b.vig_nut_dieta = 1 and a.fk_eva_cli = :cli
+                            order by fec_eva desc";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":cli", $cli, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+    /*///////////////////////////////////////
+    Cargar coach Dieta
+    //////////////////////////////////////*/
+        public function coach_Dieta($cli) {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select b.nom_coach, b.fb_coach
+                                from nut_dieta a inner join coach b on a.fk_dieta_coach = b.id_coach
+                                where  a.fk_dieta_cli =:cli  and a.vig_nut_dieta = 1";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":cli", $cli, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+
+    /*///////////////////////////////////////
+    Cargar dieta cliente 
+    //////////////////////////////////////*/
+        public function cargar_dieta($cli,$com) {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select a.id_nut_dieta, d.desc_nut_ali, b.cant_nut_ali,if(e.desc_nut_uni=0,' ',e.desc_nut_uni) uni,e.img_nut_uni, b.nota_nut_det
+                                from nut_dieta a, nut_det_dieta b left join nut_uni_med e on b.fk_nut_det_uni = e.id_nut_uni
+                                , nut_comidas c, nut_ali d
+                                where a.id_nut_dieta = b.fk_nut_dieta and a.vig_nut_dieta = 1 and b.fk_nut_det_com = c.id_nut_com 
+                                and b.fk_nut_det_ali = d.id_nut_ali and a.fk_dieta_cli = :cli and b.fk_nut_det_com = :com";
+                                                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":cli", $cli, PDO::PARAM_INT);
+                $stmt->bindParam(":com", $com, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+
+    /*///////////////////////////////////////
+    Cargar dieta actual carga dieta
+    //////////////////////////////////////*/
+        public function cargar_dieta_act($cli) {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select c.desc_nut_com, d.desc_nut_ali, b.cant_nut_ali,if(e.desc_nut_uni=0,' ',e.desc_nut_uni) uni, b.nota_nut_det
+                                from nut_dieta a, nut_det_dieta b left join nut_uni_med e on b.fk_nut_det_uni = e.id_nut_uni
+                                , nut_comidas c, nut_ali d
+                                where a.id_nut_dieta = b.fk_nut_dieta and a.vig_nut_dieta = 1 and b.fk_nut_det_com = c.id_nut_com 
+                                and b.fk_nut_det_ali = d.id_nut_ali and a.fk_dieta_cli = :cli";
+                                                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":cli", $cli, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+
+
+    /*///////////////////////////////////////
+    Cargar unidades de medida carga dieta
+    //////////////////////////////////////*/
+        public function cargar_uni_med_ali() {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select id_nut_uni, desc_nut_uni
+                                from nut_uni_med where vig_nut_uni = 1";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+    /*///////////////////////////////////////
+    Cargar alimentos carga dieta
+    //////////////////////////////////////*/
+        public function cargar_alimentos($gr) {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select id_nut_ali, desc_nut_ali
+                                from nut_ali where vig_nut_ali = 1 and fk_id_ali_ga = :gr";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":gr", $gr, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+
+    /*///////////////////////////////////////
+    Cargar grupos de alimentos carga dieta
+    //////////////////////////////////////*/
+        public function cargar_grupo_ali() {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select id_nut_grup, desc_nut_grup
+                                from nut_gru_ali where vig_nut_grup = 1";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+
+
+    /*///////////////////////////////////////
+    Cargar horario comida
+    //////////////////////////////////////*/
+        public function cargar_horarios($com) {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = 'select CONCAT(DATE_FORMAT(desde_nut_com,"%H:%i"), \'-\', DATE_FORMAT(hasta_nut_com,"%H:%i")) horario
+                                from nut_comidas where vig_nut_com = 1 and id_nut_com = :com';
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":com", $com, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetchColumn();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+
+    /*///////////////////////////////////////
+    Cargar comidas para carga dieta
+    //////////////////////////////////////*/
+        public function cargar_comidas() {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select id_nut_com, desc_nut_com
+                                from nut_comidas where vig_nut_com = 1";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+    /*///////////////////////////////////////
+    Cargar alimento para modificar
+    //////////////////////////////////////*/
+        public function alimento($ali) {
+
+            try{
+                
+                
+                $pdo = AccesoDB::getCon();
+
+
+        
+                        $sql = "select *
+                                from nut_ali where id_nut_ali = :ali";
+                
+
+                $stmt = $pdo->prepare($sql);
+                $stmt->bindParam(":ali", $ali, PDO::PARAM_INT);
+                $stmt->execute();
+
+                $response = $stmt->fetchAll();
+                return $response;
+
+            } catch (Exception $e) {
+                echo"<script type=\"text/javascript\">alert('Error, comuniquese con el administrador".  $e->getMessage()." '); window.location='../paginas_usu/clientes.php';</script>";
+            }
+        }
+
+
+
+
+
+
     /*///////////////////////////////////////
     Cargar Alimentos
     //////////////////////////////////////*/
@@ -182,23 +618,47 @@ class Funciones
              
                 $pdo = AccesoDB::getCon();
 
-                $sql= "select if(enf_car_evo = 1,'Si','No') enf, if(can_des_evo= 1,'Si','No') can, if(prob_ost_evo =
-                        1,'Si','No') prob,
-                        if(med_evo = 1,'Si','No') med, if(imp_evo = 1,'Si','No') imp, act_sem_evo act, act_lab_evo act_lab, 
+                $sql= "SELECT
+                            `evaluacion`.`enf_car_desc_eva`,
+                            `evaluacion`.`les_ost_desc_eva`,
+                            if(`evaluacion`.`enf_tab_eva`= 1,'Tabaquismo ',' ') tab,
+                            if(`evaluacion`.`enf_diab_eva`= 1,'Diabetes ',' ') diab,
+                            if(`evaluacion`.`enf_asma_eva`= 1,'Asma ',' ') asma,
+                            if(`evaluacion`.`enf_hip_eva`= 1,'Hipertensión ','No') hip,
+                            `evaluacion`.`porc_sent_eva`,
                         case
-                        when act_inf_evo = 0 then 'No'
-                        when act_inf_evo = 1 then 'ocacional'
-                        when act_inf_evo = 2 then 'Regular'
-                        when act_inf_evo = 3 then 'siempre'
-                        end act_inf,
-                        if(tiempo_casa_evo= 1,'Sentado','De Pie') tiempo,
+                            when `evaluacion`.`obj_ent_eva`= 1 then 'Aumentar Masa'
+                            when `evaluacion`.`obj_ent_eva`= 2 then 'Disminuir % Grasa'
+                            when `evaluacion`.`obj_ent_eva`= 3 then 'Disminuir tu % de grasa y aumentar levemente la masa muscular simultáneamente'
+                            when `evaluacion`.`obj_ent_eva`= 4 then 'Sólo mejorar su condición física de manera general'
+                        end obj,
+                            `evaluacion`.`alerg_ali_desc_eva`,
+                            `evaluacion`.`into_ali_desc_eva`,
+                            `evaluacion`.`alco_desc_ali_eva`,
                         case
-                        when obj_evo = 1 then 'Aumentar Masa'
-                        when obj_evo = 2 then 'Disminuir % Grasa'
-                        when obj_evo = 3 then 'Disminuir tu % de grasa y aumentar levemente la masa muscular simultáneamente'
-                        when obj_evo = 4 then 'Sólo mejorar su condición física de manera general'
-                        end obj  
-                         from evaluacion where fk_id_cli = :cli";
+                            when `evaluacion`.`apet_eva` = 0 then 'Normal'
+                            when `evaluacion`.`apet_eva` = 1 then 'Ansioso'
+                            when `evaluacion`.`apet_eva` = 2 then 'Disminuido'
+                        end apet,
+                            `evaluacion`.`digest_desc_eva`,
+                            `evaluacion`.`agua_eva`,
+                            `evaluacion`.`act_fisica_desc_eva`,
+                            `evaluacion`.`desayuno_desc_eva`,
+                            `evaluacion`.`colacion_desc_eva`,
+                            `evaluacion`.`almuerzo_desc_eva`,
+                            `evaluacion`.`once_desc_eva`,
+                            `evaluacion`.`cena_desc_eva`,
+                            `evaluacion`.`enc_frec_pan_eva`,
+                            `evaluacion`.`enc_frec_frut_eva`,
+                            `evaluacion`.`enc_frec_ens_eva`,
+                            `evaluacion`.`ens_frec_huevo_eva`,
+                            `evaluacion`.`enc_frec_pes_eva`,
+                            `evaluacion`.`enc_frec_leg_eva`,
+                            `evaluacion`.`enc_frec_golo_eva`,
+                            `evaluacion`.`enc_frec_frit_eva`,
+                            `evaluacion`.`enc_frec_azu_eva`
+                        FROM `smart_coach`.`evaluacion`
+                        where fk_id_cli_eva = :cli";
 
                 $stmt = $pdo->prepare($sql);
                 $stmt->bindParam(":cli", $cli, PDO::PARAM_INT);
@@ -220,28 +680,50 @@ class Funciones
     /*///////////////////////////////////////
     Registrar Evaluación
     //////////////////////////////////////*/
-    public function reg_evaluacion($enf, $can, $prob, $med, $imp, $sem, $lab, $inf, $casa, $obj, $cli) {
+    public function reg_evaluacion($enf, $les, $enf_cro_tab, $enf_cro_dia, $enf_cro_asm, $enf_cro_hip, $dia_sen, $obj, $aler_ali, $into_ali, $alco, $apet, $def, $agua, $act_fis, $enc_rec_des, $enc_rec_col, $enc_rec_alm, $enc_rec_once, $enc_rec_cena, $enc_frec_pan, $enc_frec_fru, $enc_frec_ens, $enc_frec_hue, $enc_frec_pes, $enc_frec_leg, $enc_frec_gol, $enc_frec_fri, $enc_frec_azu, $id_cli) {
 
 
         try{
              
                 $pdo = AccesoDB::getCon();
 
-                $sql= "INSERT INTO `evaluacion`(`enf_car_evo`,`can_des_evo`,`prob_ost_evo`,`med_evo`,`imp_evo`,`act_sem_evo`,`act_lab_evo`,`act_inf_evo`,`tiempo_casa_evo`,`obj_evo`,`fk_id_cli`)
-                VALUES(:enf, :can, :prob, :med, :imp, :sem, :lab, :inf, :casa, :obj, :cli)";
+                $sql= "INSERT INTO `smart_coach`.`evaluacion`(`enf_car_desc_eva`,`les_ost_desc_eva`,`enf_tab_eva`,`enf_diab_eva`,`enf_asma_eva`,`enf_hip_eva`,`porc_sent_eva`,`obj_ent_eva`,`alerg_ali_desc_eva`,`into_ali_desc_eva`,`alco_desc_ali_eva`,`apet_eva`,`digest_desc_eva`,`agua_eva`,`act_fisica_desc_eva`,`desayuno_desc_eva`,`colacion_desc_eva`,`almuerzo_desc_eva`,`once_desc_eva`,`cena_desc_eva`,`enc_frec_pan_eva`,`enc_frec_frut_eva`,`enc_frec_ens_eva`,`ens_frec_huevo_eva`,`enc_frec_pes_eva`,`enc_frec_leg_eva`,`enc_frec_golo_eva`,`enc_frec_frit_eva`,`enc_frec_azu_eva`,`fk_id_cli_eva`)
+                VALUES(:enf, :les, :enf_cro_tab, :enf_cro_dia, :enf_cro_asm, :enf_cro_hip, :dia_sen, :obj, :aler_ali, :into_ali, :alco, :apet, :def, :agua, :act_fis, :enc_rec_des, :enc_rec_col, :enc_rec_alm, :enc_rec_once, :enc_rec_cena, :enc_frec_pan, :enc_frec_fru, :enc_frec_ens, :enc_frec_hue, :enc_frec_pes, :enc_frec_leg, :enc_frec_gol, :enc_frec_fri, :enc_frec_azu, :id_cli);
+";
 
                 $stmt = $pdo->prepare($sql);
-                $stmt->bindParam(":enf", $enf, PDO::PARAM_BOOL);
-                $stmt->bindParam(":can", $can, PDO::PARAM_BOOL);
-                $stmt->bindParam(":prob", $prob, PDO::PARAM_BOOL);
-                $stmt->bindParam(":med", $med, PDO::PARAM_BOOL);
-                $stmt->bindParam(":imp", $imp, PDO::PARAM_BOOL);
-                $stmt->bindParam(":sem", $sem, PDO::PARAM_INT);
-                $stmt->bindParam(":lab", $lab, PDO::PARAM_INT);
-                $stmt->bindParam(":inf", $inf, PDO::PARAM_INT);
-                $stmt->bindParam(":casa", $casa, PDO::PARAM_BOOL);
+                $stmt->bindParam(":enf", $enf, PDO::PARAM_STR);
+                $stmt->bindParam(":les", $les, PDO::PARAM_STR);
+                $stmt->bindParam(":enf_cro_tab", $enf_cro_tab, PDO::PARAM_BOOL);
+                $stmt->bindParam(":enf_cro_dia", $enf_cro_dia, PDO::PARAM_BOOL);
+                $stmt->bindParam(":enf_cro_asm", $enf_cro_asm, PDO::PARAM_BOOL);
+                $stmt->bindParam(":enf_cro_hip", $enf_cro_hip, PDO::PARAM_BOOL);
+                $stmt->bindParam(":dia_sen", $dia_sen, PDO::PARAM_INT);
                 $stmt->bindParam(":obj", $obj, PDO::PARAM_INT);
-                $stmt->bindParam(":cli", $cli, PDO::PARAM_INT);
+                $stmt->bindParam(":aler_ali", $aler_ali, PDO::PARAM_STR);
+                $stmt->bindParam(":into_ali", $into_ali, PDO::PARAM_STR);
+                $stmt->bindParam(":alco", $alco, PDO::PARAM_STR);
+                $stmt->bindParam(":apet", $apet, PDO::PARAM_INT);
+                $stmt->bindParam(":def", $def, PDO::PARAM_STR);
+                $stmt->bindParam(":agua", $agua, PDO::PARAM_INT);
+                $stmt->bindParam(":act_fis", $act_fis, PDO::PARAM_STR);
+                $stmt->bindParam(":enc_rec_des", $enc_rec_des, PDO::PARAM_STR);
+                $stmt->bindParam(":enc_rec_col", $enc_rec_col, PDO::PARAM_STR);
+                $stmt->bindParam(":enc_rec_alm", $enc_rec_alm, PDO::PARAM_STR);
+                $stmt->bindParam(":enc_rec_once", $enc_rec_once, PDO::PARAM_STR);
+                $stmt->bindParam(":enc_rec_cena", $enc_rec_cena, PDO::PARAM_STR);
+                $stmt->bindParam(":enc_frec_pan", $enc_frec_pan, PDO::PARAM_INT);
+                $stmt->bindParam(":enc_frec_fru", $enc_frec_fru, PDO::PARAM_INT);
+                $stmt->bindParam(":enc_frec_ens", $enc_frec_ens, PDO::PARAM_INT);
+                $stmt->bindParam(":enc_frec_hue", $enc_frec_hue, PDO::PARAM_INT);
+                $stmt->bindParam(":enc_frec_pes", $enc_frec_pes, PDO::PARAM_INT);
+                $stmt->bindParam(":enc_frec_leg", $enc_frec_leg, PDO::PARAM_INT);
+                $stmt->bindParam(":enc_frec_gol", $enc_frec_gol, PDO::PARAM_INT);
+                $stmt->bindParam(":enc_frec_fri", $enc_frec_fri, PDO::PARAM_INT);
+                $stmt->bindParam(":enc_frec_azu", $enc_frec_azu, PDO::PARAM_INT);
+                $stmt->bindParam(":id_cli", $id_cli, PDO::PARAM_INT);
+
+
 
                 $stmt->execute();
         
@@ -265,7 +747,7 @@ class Funciones
 
 
         
-                        $sql = "select b.nom_coach, b.fb_coach
+                        $sql = "select distinct b.nom_coach, b.fb_coach
                                 from rutina a inner join coach b on a.fk_id_coach = b.id_coach
                                 where  a.fk_id_cli =:cli and a.fec_rut = :fec and a.vig_rut = 1";
                 
@@ -395,12 +877,10 @@ class Funciones
 
 
         
-                        $sql = "select a.id_rut, b.nom_ejer, c.nom_musc,a.series_rut, a.rep_rut, a.pausas_rut, 
-                        case when a.vel_rut = 1 then 'Lenta' when a.vel_rut = 2 then 'Moderada' when a.vel_rut = 3 then 'Rapida' end vel_rut ,
-                        b.nota_ejer, a.nota_rut, SUBSTR(b.link_ejer, 33) video
+                        $sql = "select a.id_rut, b.nom_ejer, c.nom_musc
                                 from rutina a inner join ejercicios b on a.fk_id_ejer = b.id_ejer 
                                 inner join musculos c on b.fk_id_musc = c.id_musc
-                                where  a.fk_id_cli = :cli and a.fec_rut = :fec and a.vig_rut = 1";
+                                where  a.fk_id_cli = :cli and a.fec_rut = :fec and a.vig_rut = 1 and circuito = 0 ";
                 
 
                 $stmt = $pdo->prepare($sql);
@@ -551,10 +1031,10 @@ class Funciones
 
 
         
-                        $sql = "select a.id_rut, a.fk_id_ejer, b.nom_ejer, c.nom_musc, a.series_rut, a.rep_rut, a.pausas_rut,case when a.vel_rut = 1 then 'Lenta' when a.vel_rut = 2 then 'Moderada' when a.vel_rut = 3 then 'Rapida' end vel_rut,a.nota_rut
+                        $sql = "select a.id_rut, a.fk_id_ejer, b.nom_ejer, c.nom_musc, a.series_rut, a.rep_rut, a.pausas_rut,case when a.vel_rut = 1 then 'Lenta' when a.vel_rut = 2 then 'Moderada' when a.vel_rut = 3 then 'Rapida' end vel_rut,a.nota_rut,ifnull(a.circuito,0) circuito
                                     from rutina a inner join ejercicios b on a.fk_id_ejer = b.id_ejer 
                                     inner join musculos c on b.fk_id_musc = c.id_musc
-                                    where a.fk_id_cli = :cli and a.fec_rut = :fec and a.vig_rut = 1";
+                                    where a.fk_id_cli = :cli and a.fec_rut = :fec and a.vig_rut = 1 order by a.circuito";
                 
 
                 $stmt = $pdo->prepare($sql);

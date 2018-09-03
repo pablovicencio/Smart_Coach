@@ -7,10 +7,14 @@ if( isset($_SESSION['id']) and $_SESSION['tipo'] == 2 ){
   else{
     //Si no lo redirige a la pagina index para que inicie la sesion 
     header("location: ../../index.html");
-  } 
-  
+  }   
+if (isset($_GET['ali'])) {
+  $ali = $_GET['ali'];
+}else{
+  echo"<script type=\"text/javascript\">alert('Favor, seleccione un Alimento para modificar'); window.location='nutricion.php';</script>"; 
+}
 
-  require_once '../clases/Funciones.php';
+require_once '../clases/Funciones.php';
 
   $fun = new Funciones(); 
 ?>
@@ -18,28 +22,24 @@ if( isset($_SESSION['id']) and $_SESSION['tipo'] == 2 ){
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<title>D3 - Nutrición</title>
+<title>D3 - Modificar Alimento</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 
-
-<script>
-
-
-
+  <script>
 function validar(f){
-f.btnAc.value="Creando Alimento";
+f.btnAc.value="Modificando Alimento";
 f.btnAc.disabled=true;
 return true}
-
 </script>
-
-
 </head>
 
 <body>
+
+  
+  
       <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
               <a  href="entrenamiento.php"><img class="img-fluid" src="../img/logo/logo_d3safio3.png" alt="D3safio" width="150" height="30"></a>
               <ul class="navbar-nav ml-auto" >
@@ -65,52 +65,33 @@ return true}
               </ul>
 </nav>
 <div class="container" style="padding-top: 5px">
-
-<div class="row">
-<div class="col-sm">
-  <h3>Cargar Dieta</h3>
-  <br>
-  <form role="form" action="carga_dieta.php" method="get" >
-  <label>Cliente:</label>
-  <select class="form-control" name="cli" style="width: 60%; display: inline-block;">
-    <option value="" selected disabled>Seleccione el cliente</option>
-                 <?php 
-                  $re = $fun->cargar_clientes_dd(2);   
-                  foreach($re as $row)      
-                      {
-                        ?>
-                        
-                         <option value="<?php echo $row['id_cli'] ?> ">
-                         <?php echo $row['nom_cli'] ?>
-                         </option>
-                            
-                        <?php
-                      }    
-                  ?>       
-  </select>
-  <input type="submit" class="btn btn-outline-success" style=" display: inline-block; margin-left: 10px;" value="Ir">
-  </form>
-  <br>
-  <br>
-</div>
-</div>
-<hr>
   <div class="row">
   <div class="col-12">
-    <h3>Crear Alimento</h3>
-    <br>
+    <h3>Modificar Alimento</h3>
+    <hr>
   </div>
   </div>
+
+  <?php
+              $re = $fun->alimento($ali);
+              foreach($re as $row){    
+              }
+              
+?>
+
+
+
   <div class="row">
     <div class="col-6">
-          <form role="form" action="../controles/control_crearAlimento.php" method="post">
+          <form role="form" action="../controles/control_modAlimento.php" method="post" id="mod_ali" name="mod_ali" onsubmit="return validar(this)">
             <div class="form-group">
+              <input type="number" class="form-control" name="id_ali" value="<?php echo $ali; ?>" required style="display: none;">
               <label for="nom">Nombre:</label>
-              <input type="text" class="form-control" name="nom_ali" id="nom_ali" maxlength="200" required>
+              <input type="text" class="form-control" name="nom_ali" maxlength="200" value="<?php echo $row['desc_nut_ali']; ?>" required>
             </div>
             <div class="form-group">
-              <label for="ga">Grupo de Alimento:</label>
-              <select class="form-control" name="ga" id="ga" required>
+              <label for="nom">Grupo de Alimento:</label>
+             <select class="form-control" name="ga" id="ga" required>
                       <option value="" selected disabled>Seleccione Grupo</option>
                                    <?php 
                                     $re1 = $fun->cargar_g_a();   
@@ -125,51 +106,13 @@ return true}
                                     ?>       
                     </select>
             </div>
-            <input type="submit" class="btn btn-outline-success" id="btnAc" name="btnAc" value="Crear Alimento">
+            <div class="form-check">
+            <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" name="vig" id="vig" <?php if ($row['vig_nut_ali'] == 1) { echo 'checked'; } ?> > Vigencia
+            </label>
+            <input type="submit" class="btn btn-outline-success" id="btnAc" name="btnAc" value="Modificar Alimento">
           </form>
     </div>
     </div>
-
-    <br>
-    <hr>
-
-<h3>Modificar Alimento</h3><br>
-         
-  <table class="table table-sm table-dark">
-    <thead >
-      <tr>
-        <th>Id</th>
-        <th>Nombre</th>
-        <th>Grupo Alimento</th>
-        <th>Vigencia</th>
-      </tr>
-    </thead>
-    <tbody>
-     <?php
-              $re2 = $fun->cargar_ali();
-              foreach($re2 as $row2){
-
-                $id_ali = $row2['id_nut_ali'];
-                $link = '<a href=alimento.php?ali='.$id_ali.' class="badge badge-light">';
-                
-                echo ('<tr><td ><center>'.$link.$row2['id_nut_ali'].'</a></center></td>');
-                echo ('<td>'.$row2['desc_nut_ali'].'</td>');
-                echo ('<td>'.$row2['desc_nut_grup'].'</td>');
-                echo ('<td>'.$row2['vig'].'</td></tr>');
- 
-              }
-?>
-    </tbody>
-  </table>
-
-
-
-
-
-
-
-
-</div>
-
 </body>
 </html>

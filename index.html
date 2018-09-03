@@ -1,20 +1,36 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>D3safío</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+
+  <style type="text/css">
+        #main{
+        width: 50%;
+      }
+        @media (max-width: 800px) {
+    
+        #main{
+                    width: 100%;
+                  }
+        }
+
+  </style>
 </head>
 
 <body>
 
+
+
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
               <img class="img-fluid" src="recursos/img/logo/logo_d3safio3.png" alt="D3safio" width="150" height="30">
   </nav>
-    <div class="container" style="width: 50%;">
+    <div class="container" id="main">
   <form role="form" action="recursos/controles/control_login.php" method="post" id="login" name="login">
     <div class="form-group">
       <label for="email">Email:</label>

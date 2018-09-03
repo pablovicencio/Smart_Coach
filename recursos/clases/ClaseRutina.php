@@ -40,11 +40,17 @@ class RutinaDAO
                               $vel = $row['vel'];
                               $nota = $row['nota'];
                               $ejer = $row['ejercicio'];
+                              if (!isset($row['circ'])) {
+                                  $circ = 0;
+                              }else{
+                                  $circ = $row['circ'];
+                              }
+                              
 
                               if ($rut == 0) {
                                   $sql_rut = "INSERT INTO `rutina`
-                                (`fec_rut`,`rep_rut`,`series_rut`,`pausas_rut`,`vel_rut`,`nota_rut`,`fk_id_cli`,`fk_id_ejer`,`fk_id_coach`,`vig_rut`,`fec_reg_rut`)
-                                VALUES(:fec, :rep, :series, :pausas, :vel, :nota, :cli, :ejer, :coach, :vig, :fec_reg)";
+                                (`fec_rut`,`rep_rut`,`series_rut`,`pausas_rut`,`vel_rut`,`nota_rut`,`fk_id_cli`,`fk_id_ejer`,`fk_id_coach`,`vig_rut`,`fec_reg_rut`, `circuito`)
+                                VALUES(:fec, :rep, :series, :pausas, :vel, :nota, :cli, :ejer, :coach, :vig, :fec_reg, :circ)";
 
 
 
@@ -60,7 +66,12 @@ class RutinaDAO
                         $stmt->bindParam("coach", $id_coach, PDO::PARAM_INT);
                         $stmt->bindParam("vig", $this->vigencia, PDO::PARAM_INT);
                         $stmt->bindParam("fec_reg", $fec_reg_rut, PDO::PARAM_STR);
+                        $stmt->bindParam("circ", $circ, PDO::PARAM_INT);
                 $stmt->execute();
+
+
+
+
                               }
 
                 

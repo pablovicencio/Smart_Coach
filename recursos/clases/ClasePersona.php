@@ -28,8 +28,8 @@ Clase abstracta Persona
                                 from coach 
                                 where vig_coach = 1 and correo_coach = :correo
                                 union all 
-                                select a.id_cli, a.correo_cli,a.pass_cli,a.nom_cli,0 ,3 tipo, IFNULL(b.id_evo,0) 
-                                from clientes a left join evaluacion b on a.id_cli = b.fk_id_cli
+                                select a.id_cli, a.correo_cli,a.pass_cli,a.nom_cli,a.servicio_cli ,3 tipo, IFNULL(b.id_eva,0) 
+                                from clientes a left join evaluacion b on a.id_cli = b.fk_id_cli_eva
                                 where a.vig_cli = 1 and a.correo_cli = :correo and sysdate() BETWEEN a.fec_plan_cli and DATE_ADD(a.fec_plan_cli, INTERVAL 1 MONTH);";
 
                 $stmt = $pdo->prepare($sql_login);

@@ -13,6 +13,7 @@ class DietaDAO
     private $data;
     private $vigencia;
 
+
     public function __construct($id=null,$fecha=null,$data=null,$vigencia=null) {
         $this->id  = $id;
         $this->fecha  = $fecha;
@@ -44,8 +45,8 @@ class DietaDAO
                             $stmt->bindParam("cli", $id_cli, PDO::PARAM_INT);
                     $stmt->execute();
 
-                $sql_dieta = "INSERT INTO `smart_coach`.`nut_dieta`(`fec_nut_dieta`,`vig_nut_dieta`,`
-                                fk_dieta_coach`,`fk_dieta_cli`)
+                $sql_dieta = "INSERT INTO `smart_coach`.`nut_dieta`(`fec_nut_dieta`,`vig_nut_dieta`,
+                                            `fk_dieta_coach`,`fk_dieta_cli`)
                                 VALUES(:fec, :vig, :coach, :cli)";
 
                     $stmt = $pdo->prepare($sql_dieta);
@@ -57,7 +58,7 @@ class DietaDAO
 
 
 
-                $sql= " SELECT id_nut_dieta FROM `dieta` ORDER BY `id_nut_dieta` DESC LIMIT 1 ";
+                $sql= " SELECT id_nut_dieta FROM `nut_dieta` ORDER BY `id_nut_dieta` DESC LIMIT 1 ";
                     $stmt = $pdo->prepare($sql);
                     $stmt->execute();
                     $id = $stmt->fetchColumn();
@@ -70,12 +71,13 @@ class DietaDAO
                               $ali = $row['ali'];
                               $med = $row['med'];
                               $nota = $row['nota'];
+                              $cant = $row['cant'];
 
                          
-                                  $sql_det_dieta = "INSERT INTO `smart_coach`.`nut_det_dieta`(`
-                                  fk_nut_det_com`,`fk_nut_det_ga`,`fk_nut_det_ali`,`fk_nut_det_uni`,`fk_nut_dieta`
-                                  ,`vig_nut_det`,`nota_nut_det`)
-                                  VALUES(:com, :ga, :ali, :med, :dieta, :vig, :nota)";
+                                  $sql_det_dieta = "INSERT INTO `smart_coach`.`nut_det_dieta`
+                                  (`fk_nut_det_com`,`fk_nut_det_ga`,`fk_nut_det_ali`,`fk_nut_det_uni`,`fk_nut_dieta`
+                                  ,`vig_nut_det`,`nota_nut_det`,`cant_nut_ali`)
+                                  VALUES(:com, :ga, :ali, :med, :dieta, :vig, :nota, :cant)";
 
 
 
@@ -83,9 +85,11 @@ class DietaDAO
                                         $stmt->bindParam("com", $com, PDO::PARAM_INT);
                                         $stmt->bindParam("ga", $ga, PDO::PARAM_INT);
                                         $stmt->bindParam("ali", $ali, PDO::PARAM_INT);
+                                        $stmt->bindParam("med", $med, PDO::PARAM_INT);
                                         $stmt->bindParam("dieta", $id, PDO::PARAM_INT);
                                         $stmt->bindParam("vig", $this->vigencia, PDO::PARAM_INT);
                                         $stmt->bindParam("nota", $nota, PDO::PARAM_STR);
+                                        $stmt->bindParam("cant", $cant, PDO::PARAM_INT);
                                 $stmt->execute();
                 
                  }
@@ -100,9 +104,9 @@ class DietaDAO
 
 
         /*///////////////////////////////////////
-        Evaluar Rutina-BORG
+        Evaluar dieta
         //////////////////////////////////////*/
-        public function borg_rutina($esc, $fec, $cli) {
+        public function eva_dieta($ham,$hora,$seg,$fec,$cli) {
 
             try{
 
@@ -112,15 +116,17 @@ class DietaDAO
 
                
 
-                $sql_borg_rut = "INSERT INTO `smart_coach`.`esc_borg`(`esc`,`fec_esc`,`fk_esc_rut`,`fk_esc_cli`)
-                                VALUES(:esc, :fec, :rut, :cli)";
+                $sql_borg_rut = "INSERT INTO `smart_coach`.`eva_dieta`(`hambre_eva`,`horario_eva`,`seg_dieta_eva`,`fec_eva`,`fk_eva_dieta`,`fk_eva_cli`)
+                    VALUES(:ham, :hora, :seg, :fec, :die, :cli)";
 
 
 
                 $stmt = $pdo->prepare($sql_borg_rut);
-                        $stmt->bindParam("esc", $esc, PDO::PARAM_INT);
+                        $stmt->bindParam("ham", $ham, PDO::PARAM_INT);
+                        $stmt->bindParam("hora", $hora, PDO::PARAM_INT);
+                        $stmt->bindParam("seg", $seg, PDO::PARAM_INT);
                         $stmt->bindParam("fec", $fec, PDO::PARAM_STR);
-                        $stmt->bindParam("rut", $this->id, PDO::PARAM_INT);
+                        $stmt->bindParam("die", $this->id, PDO::PARAM_INT);
                         $stmt->bindParam("cli", $cli, PDO::PARAM_INT);
                 $stmt->execute();
 
